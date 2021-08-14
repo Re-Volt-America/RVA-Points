@@ -21,7 +21,7 @@ setuptools.setup(
     py_modules=["rvgl_launcher"],
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: GNU Affero General Public License",
+        "License :: OSI Approved :: GNU Affero General Public License AGPL-3.0",
         "Operating System :: OS Independent",
         "Development Status :: alpha"
     ],
