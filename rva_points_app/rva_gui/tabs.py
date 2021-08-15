@@ -124,6 +124,7 @@ class CalculateTab(ScrolledTabPage):
 
     def on_import_button_click(self, e):
         self.parent.parent.on_import_session_log(e)
+        self.on_preview_button_click(e)
 
     def on_export_button_click(self, e):
         self.parent.parent.on_export_session_log(e)
