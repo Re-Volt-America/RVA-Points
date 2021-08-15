@@ -117,7 +117,7 @@ class CalculateTab(ScrolledTabPage):
         self.box_actions_header.Add(self.box_quick_access, 1, wx.ALIGN_LEFT | wx.ALL, 1)
         self.box_calculate.Add(self.box_actions_header, 0, wx.EXPAND | wx.ALL, 5)
 
-        self.set_class(RVA_DEFAULT_CLASS)
+        self.set_class(RVA_CLASSES[CONFIG["default_category"]])
 
     def on_class_selection(self, e):
         pass
@@ -174,7 +174,7 @@ class CalculateTab(ScrolledTabPage):
         if car_class is not None:
             car_class.capitalize()
 
-        car_class = ("Rookie", car_class)[car_class in self.class_options]
+        car_class = (RVA_CLASSES[CONFIG["default_category"]].capitalize(), car_class)[car_class in self.class_options]
         if car_class in self.class_options:
             self.class_selector.SetSelection(self.class_options.index(car_class))
             self.on_class_selection(car_class)

@@ -19,8 +19,8 @@ class FrameMain(wx.Frame):
         self.SetTitle(APP_TITLE_WITH_VER)
         self.set_icon()
 
-        self.SetMinSize(APP_MIN_SIZE)
-        self.SetSize(APP_LAUNCH_SIZE)
+        self.SetMinSize(wx.Size(CONFIG["app_min_window_size"]))
+        self.SetSize(wx.Size(CONFIG["app_launch_window_size"]))
         self.Center()
 
         self.box = wx.BoxSizer(wx.VERTICAL)
@@ -110,7 +110,7 @@ class FrameMain(wx.Frame):
         e.Skip()
 
     def on_report_a_bug(self, e):
-        webbrowser.open(GITHUB_ISSUES)
+        webbrowser.open(CONFIG["git_issues_url"])
 
     def set_icon(self):
         ext = ("png", "ico")[sys.platform == "win32"]
