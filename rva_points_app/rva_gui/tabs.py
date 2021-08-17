@@ -45,7 +45,7 @@ class CalculateTab(ScrolledTabPage):
         self.box_calculate.Add(self.box_calculate_header, 0, wx.EXPAND | wx.ALL, 10)
 
         " Actions Grid "
-        self.box_actions_header = wx.GridSizer(rows=1, cols=2, vgap=0, hgap=-200)
+        self.box_actions_header = wx.GridSizer(rows=1, cols=2, vgap=0, hgap=0)
 
         " Actions Box "
         self.box_actions = wx.StaticBoxSizer(wx.VERTICAL, self, "Actions")
