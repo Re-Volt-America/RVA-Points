@@ -149,7 +149,11 @@ class Session:
                     if car_used == last_car_used:
                         racer_cars_line.append(str())
                     else:
-                        racer_cars_line.append(race.get_racer_car(result_entry.name))
+                        car = race.get_racer_car(result_entry.name)
+                        if car.startswith("Clockwork"):
+                            car = car.split(" ", 1)[1]
+
+                        racer_cars_line.append(car)
                     last_car_used = car_used
                 else:
                     racer_cars_line.append(str())
