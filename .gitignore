@@ -132,4 +132,4 @@ dmypy.json
 .idea
 
 # Session & Result logs
-.csv
+sessions/*.csv
