@@ -209,3 +209,10 @@ amateur:
     acc: 3.16
     weight: 1.00
     multiplier: 0.7
+  mystery:
+    name: Mystery
+    slug: mystery
+    speed: 68.40
+    acc: 5.26
+    weight: 1.00
+    multiplier: 1.0

@@ -216,3 +216,17 @@ pro:
     acc: 2.76
     weight: 1.70
     multiplier: 0.9
+  trolley:
+    name: Trolley
+    slug: trolley
+    speed: 48.90
+    acc: 1.04
+    weight: 4.00
+    multiplier: 1.0
+  probe_ufo:
+    name: Probe UFO
+    slug: probe_ufo
+    speed: 68.40
+    acc: 5.26
+    weight: 1.00
+    multiplier: 1.0
