@@ -79,6 +79,7 @@ class FrameMain(wx.Frame):
             self.calculate_tab.session_file_name = dialog.GetFilename()
             self.calculate_tab.session_file_path = dialog.GetPath()
             self.calculate_tab.session.rva_system.set_category_class_number(self.calculate_tab.get_selected_class_number())
+            self.calculate_tab.on_preview_button_click(e)
 
         dialog.Destroy()
         self.calculate_tab.update_preview()
