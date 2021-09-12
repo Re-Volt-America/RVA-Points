@@ -150,7 +150,7 @@ class Session:
                         racer_cars_line.append(str())
                     else:
                         car = race.get_racer_car(result_entry.name)
-                        if car.startswith("Clockwork"):
+                        if not car == "Clockwork" and car.startswith("Clockwork"):
                             car = car.split(" ", 1)[1]
 
                         racer_cars_line.append(car)
