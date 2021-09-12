@@ -230,3 +230,10 @@ pro:
     acc: 5.26
     weight: 1.00
     multiplier: 1.0
+  clockwork:
+    name: Clockwork
+    slug: clockwork
+    speed: 68.7
+    acc: 2.56
+    weight: 1.2
+    multiplier: 1.0
