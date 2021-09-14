@@ -80,6 +80,9 @@ class FrameMain(wx.Frame):
             self.calculate_tab.session_file_path = dialog.GetPath()
             self.calculate_tab.session.rva_system.set_category_class_number(self.calculate_tab.get_selected_class_number())
             self.calculate_tab.on_preview_button_click(e)
+            self.calculate_tab.allows_mystery = False
+            self.calculate_tab.allow_mystery_checkbox.Set3StateValue(wx.CHK_UNCHECKED)
+            self.calculate_tab.allow_mystery_checkbox.Enable()
 
         dialog.Destroy()
         self.calculate_tab.update_preview()

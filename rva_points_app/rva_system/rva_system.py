@@ -35,6 +35,7 @@ class RVASystem:
 
         self.initial_racer_count = initial_racer_count
         self.category_class_number = None
+        self.allows_mystery = False
 
         if self.initial_racer_count > 10:
             self.SCORING = {
@@ -83,6 +84,9 @@ class RVASystem:
     def set_category_class_number(self, category_class_number):
         self.category_class_number = category_class_number
 
+    def set_allows_mystery(self, allows_mystery):
+        self.allows_mystery = allows_mystery
+
     def get_car_multiplier(self, car_name):
         car = self.__get_car(car_name)
 
@@ -109,6 +113,10 @@ class RVASystem:
         return self.SCORING[position]
 
     def get_car_bonus(self, car_name):
+        if car_name == "Mystery":
+            if not self.allows_mystery:
+                return None  # Car is mystery & the allow mystery box is unchecked, therefore invalid
+
         if self.category_class_number == 6:
             return 1.0  # The current category is Random, therefore all cars are valid & bonus is always 1.0
 

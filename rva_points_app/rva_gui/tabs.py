@@ -15,6 +15,7 @@ class CalculateTab(ScrolledTabPage):
         self.session_file_name = None
         self.session_file_path = None
         self.teams = False
+        self.allows_mystery = False
 
     def init_ui(self):
         self.box = wx.BoxSizer(wx.VERTICAL)
@@ -92,6 +93,15 @@ class CalculateTab(ScrolledTabPage):
         self.box_teams_string.Add(self.teams_checkbox, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
         self.box_actions.Add(self.box_teams_string, 1, wx.EXPAND | wx.ALL, 0)
 
+        self.box_allow_mystery_string = wx.BoxSizer(wx.HORIZONTAL)
+        self.allow_mystery_string = wx.StaticText(static_box, -1, "Allow Mystery")
+        self.allow_mystery_checkbox = wx.CheckBox(static_box, -1, label="")
+        self.allow_mystery_checkbox.Bind(wx.EVT_CHECKBOX, self.on_allow_mystery_check_mark)
+        self.allow_mystery_checkbox.Disable()
+        self.box_allow_mystery_string.Add(self.allow_mystery_string, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+        self.box_allow_mystery_string.Add(self.allow_mystery_checkbox, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+        self.box_actions.Add(self.box_allow_mystery_string, 1, wx.EXPAND | wx.ALL, 0)
+
         " Quick Access Box "
         self.box_quick_access = wx.StaticBoxSizer(wx.VERTICAL, self, "Quick Access")
         self.box_quick_access.SetMinSize(wx.Size(300, 50))
@@ -135,6 +145,7 @@ class CalculateTab(ScrolledTabPage):
         new_log = SessionLog(self.session_file_path, teams=self.is_parsing_teams())
         self.session = new_log.get_session()
         self.session.rva_system.set_category_class_number(self.get_selected_class_number())
+        self.session.rva_system.set_allows_mystery(self.allows_mystery)
 
         self.update_preview()
 
@@ -146,6 +157,9 @@ class CalculateTab(ScrolledTabPage):
 
     def on_teams_check_mark(self, e):
         self.teams = not self.teams
+
+    def on_allow_mystery_check_mark(self, e):
+        self.allows_mystery = not self.allows_mystery
 
     def on_open_sessions_button_click(self, e):
         msg = ""
