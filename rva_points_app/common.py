@@ -1,4 +1,4 @@
-APP_VERSION = "0.0.1-alpha"  # TODO: Fetch version from GitHub
+APP_VERSION = "0.0.3-alpha"  # TODO: Fetch version from GitHub
 
 APP_NAME = "rvapp"
 APP_TITLE = "RVA Points"
