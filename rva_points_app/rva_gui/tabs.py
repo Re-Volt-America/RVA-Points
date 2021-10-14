@@ -210,7 +210,6 @@ class PreviewTab(ScrolledTabPage):
     def __init__(self, parent):
         TabPage.__init__(self, parent)
         self.rva_results = None
-        self.TRACK_NAMES = {}
 
         self.GRID_BACKGROUND_RGB = wx.Colour(45, 63, 67)
         self.GRID_BORDER_RGB = wx.Colour(100, 100, 100)
@@ -228,8 +227,6 @@ class PreviewTab(ScrolledTabPage):
         self.GRID_SECOND_PLACE_TXT_RGB = wx.Colour(204, 204, 204)
         self.GRID_THIRD_PLACE_TXT_RGB = wx.Colour(205, 127, 50)
         self.GRID_INVALID_PLACE_RGB = wx.Colour(255, 50, 40)
-
-        self.__load_track_names()
 
         self.init_ui()
 
@@ -277,7 +274,7 @@ class PreviewTab(ScrolledTabPage):
                     self.session_grid.SetColSize(head_col, 150)
                     self.session_grid.SetColLabelValue(head_col, str(item))
                 else:
-                    short_name = self.__get_track_short_name(str(item))
+                    short_name = str(item)
                     if short_name is not None:
                         self.session_grid.SetColSize(head_col, 30)
                         self.session_grid.SetColLabelValue(head_col, short_name)
@@ -401,15 +398,3 @@ class PreviewTab(ScrolledTabPage):
             self.session_grid.DeleteCols(0, current_col_count - cols, True)
         elif cols > current_col_count:
             self.session_grid.AppendCols(cols - current_col_count)
-
-    def __get_track_short_name(self, track_name):
-        short_name = None
-        for track_key in self.TRACK_NAMES:
-            if track_name.startswith(track_key):
-                return self.TRACK_NAMES[track_key]
-
-        return short_name
-
-    def __load_track_names(self):
-        with open(os.path.join(os.getcwd(), "tracks", "track_names.yaml")) as fh:
-            self.TRACK_NAMES = yaml.load(fh, Loader=yaml.FullLoader)

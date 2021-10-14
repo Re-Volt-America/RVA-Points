@@ -73,6 +73,8 @@ class Session:
         self.rva_system = rva_system
         self.teams = teams
 
+        self.TRACK_NAMES = self.__load_track_names()
+
     def get_racer_result_entries(self):
         racer_result_entries = []
         for racer_name in self.get_racers():
@@ -174,7 +176,7 @@ class Session:
     def get_tracks(self):
         tracks = []
         for race in self.races:
-            tracks.append(race.track)
+            tracks.append(self.__get_track_short_name(race.track))
         return tracks
 
     def get_tracks_played_by(self, racer_name):
@@ -232,6 +234,18 @@ class Session:
     def get_race_count_of(self, racer_name):
         races_played = self.get_tracks_played_by(racer_name)
         return len(races_played)
+
+    def __get_track_short_name(self, track_name):
+        short_name = None
+        for track_key in self.TRACK_NAMES:
+            if track_name.startswith(track_key):
+                return self.TRACK_NAMES[track_key]
+
+        return short_name
+
+    def __load_track_names(self):
+        with open(os.path.join(os.getcwd(), "tracks", "track_names.yaml")) as fh:
+            return yaml.load(fh, Loader=yaml.FullLoader)
 
 
 class SessionLog:
