@@ -8,7 +8,7 @@
 
 
 ## Installation
-  1. Download the latest release available [here](https://github.com/Re-Volt-America/RVA-Points/releases). It should come as a compressed file.
+  1. Download the latest release available [here](https://distribute.revolt-america.com/rva_points/rva_points-latest.zip). It should come as a compressed file.
   2. De-compress the files into a folder anywhere in your system.
   3. Execute `rva_points.exe`.
       * We currently only support Windows
