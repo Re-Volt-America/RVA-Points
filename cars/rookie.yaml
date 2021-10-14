@@ -34,7 +34,7 @@ rookie:
     acc: 2.23
     weight: 1.6
     multiplier: 0.9
-  col_moss:
+  col._moss:
     name: Col Moss
     slug: col_moss
     speed: 52.5
