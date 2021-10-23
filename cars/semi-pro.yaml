@@ -63,7 +63,7 @@ semi-pro:
     weight: 1.2
     multiplier: 0.8
   big-tory:
-    name: Big Tory
+    name: Big-Tory
     slug: big-tory
     speed: 61.1
     acc: 3.14

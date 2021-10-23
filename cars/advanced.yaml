@@ -5,7 +5,7 @@ advanced:
     speed: 57
     acc: 2.16
     weight: 3.5
-    multiplier: 0.8
+    multiplier: 1
   bertha_ballistics:
     name: Bertha Ballistics
     slug: bertha_ballistics
