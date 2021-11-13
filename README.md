@@ -4,7 +4,7 @@
 
 
 <h1 align="center">RVA-Points</h1>
-<h4 align="center">A program to parse <a href="https://rvgl.re-volt.io/" target="_blank">RVGL</a> session logs and export them as Re-Volt America results</h4>
+arse <a href="https://rvgl.re-volt.io/" target="_blank">RVGL</a> session logs and export them as Re-Volt America results</h4>
 
 
 ## Installation
@@ -17,7 +17,7 @@
 ## Preview Images
 <p align="left">
   <h3>Calculate Tab</h3>
-  <img src="https://user-images.githubusercontent.com/26081543/129636796-b4cd1062-d38b-41e8-a02e-da7272b5eb2f.PNG" alt=""/>
+  <img src="https://user-images.githubusercontent.com/26081543/141656388-a35214aa-4511-4d16-9718-e3036c852d27.PNG" alt=""/>
   <h3>Preview Tab</h3>
   <img src="https://user-images.githubusercontent.com/26081543/129636799-4dc2c318-312c-4214-bedf-5d23a08187b4.PNG" alt=""/>
 </p>
