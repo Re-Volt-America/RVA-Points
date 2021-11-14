@@ -4,7 +4,7 @@
 
 
 <h1 align="center">RVA-Points</h1>
-arse <a href="https://rvgl.re-volt.io/" target="_blank">RVGL</a> session logs and export them as Re-Volt America results</h4>
+<h4 align="center">A program to parse <a href="https://rvgl.re-volt.io/" target="_blank">RVGL</a> session logs and export them as Re-Volt America results</h4>
 
 
 ## Installation
