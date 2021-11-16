@@ -279,12 +279,14 @@ class PreviewTab(ScrolledTabPage):
                         self.session_grid.SetColSize(head_col, 30)
                         self.session_grid.SetColLabelValue(head_col, short_name)
                     elif str(item) == "Team":
-                        self.session_grid.SetColSize(head_col, 35)
                         self.session_grid.SetColLabelValue(head_col, str(item))
                     else:
                         self.session_grid.SetColLabelValue(head_col, str(item))
                     if str(item) in ["PP", "PA", "CC", "MP", "PO"]:
                         self.session_grid.SetColSize(head_col, 80)
+                    if str(item) == "Team":
+                        self.session_grid.SetColSize(head_col, 40)
+
                 head_col = head_col + 1
 
     def __fill_preview_content(self):
