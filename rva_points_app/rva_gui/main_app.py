@@ -1,13 +1,10 @@
-import wx
-import os
-import sys
 import csv
 import webbrowser
 
-from rva_points_app.session_log import SessionLog
-from rva_points_app.rva_gui.widgets import *
+from rva_points_app.config import prepare_config, save_config
 from rva_points_app.rva_gui.tabs import *
 from rva_points_app.common import *
+from rva_points_app.startup import prepare_folders
 
 
 class FrameMain(wx.Frame):
@@ -28,9 +25,12 @@ class FrameMain(wx.Frame):
         self.tab_bar = TabBar(self)
         self.calculate_tab = CalculateTab(self.tab_bar)
         self.preview_tab = PreviewTab(self.tab_bar)
+        self.console_tab = ConsoleTab(self.tab_bar)
 
         self.tab_bar.AddPage(self.calculate_tab, "Calculate")
         self.tab_bar.AddPage(self.preview_tab, "Preview")
+        self.tab_bar.AddPage(self.console_tab, "Console")
+        self.console_tab.Hide()
 
         self.box.Add(self.tab_bar, 1, wx.EXPAND, 0)
         self.SetSizer(self.box)
@@ -61,6 +61,13 @@ class FrameMain(wx.Frame):
         self.menu_help_report_bug = self.menu_help.Append(-1, "Report a Bug", "Opens our GitHub Issues page")
         self.Bind(wx.EVT_MENU, self.on_report_a_bug, self.menu_help_report_bug)
 
+        self.menu_help.AppendSeparator()
+
+        self.menu_help_console = self.menu_help.AppendCheckItem(-1, "Show Console", "Show console messages")
+        self.Bind(wx.EVT_MENU, self.on_show_console, self.menu_help_console)
+        self.menu_help_console.Check(CONFIG["show-console"])
+        self.on_show_console(None)
+
         self.menu_bar.Append(self.menu_help, "&Help")
 
         self.SetMenuBar(self.menu_bar)
@@ -75,6 +82,9 @@ class FrameMain(wx.Frame):
 
         if response == wx.ID_OK:
             log_file = dialog.GetPath()
+
+            print_log(f"Importing Session Log '{log_file}'...")
+
             self.calculate_tab.session = SessionLog(log_file, teams=self.calculate_tab.is_parsing_teams()).get_session()
             self.calculate_tab.session_file_name = dialog.GetFilename()
             self.calculate_tab.session_file_path = dialog.GetPath()
@@ -102,6 +112,8 @@ class FrameMain(wx.Frame):
         response = dialog.ShowModal()
 
         if response == wx.ID_OK:
+            print_log(f"Exporting Session Log to '{file}'...")
+
             with open(os.path.join(directory, file), "w+", newline='') as csv_file:
                 writer = csv.writer(csv_file, delimiter=",")
                 writer.writerows(self.calculate_tab.session.get_rva_results())
@@ -116,6 +128,19 @@ class FrameMain(wx.Frame):
     def on_report_a_bug(self, e):
         webbrowser.open(CONFIG["git_issues_url"])
 
+    def on_show_console(self, e):
+        CONFIG["show-console"] = self.menu_help_console.IsChecked()
+        if sys.platform != "win32":
+            self.console_tab.Show(CONFIG["show-console"])
+            return
+
+        # Page hiding is not supported on Windows...
+        page = self.tab_bar.FindPage(self.console_tab)
+        if CONFIG["show-console"] and page == -1:
+            self.tab_bar.AddPage(self.console_tab, "Console")
+        elif not CONFIG["show-console"] and page != -1:
+            self.tab_bar.RemovePage(page)
+
     def set_icon(self):
         ext = ("png", "ico")[sys.platform == "win32"]
         icon_file = os.path.join("icons", f"icon.{ext}")
@@ -126,6 +151,12 @@ class FrameMain(wx.Frame):
 def main():
     app = wx.App()
 
+    prepare_config()
+    prepare_folders()
+    prepare_data()
+
+    common.log_file = LogFile()
+
     app.SetAppName(APP_NAME)
     app.SetAppDisplayName(APP_TITLE)
     app.SetClassName(APP_TITLE)
@@ -135,6 +166,8 @@ def main():
 
     app.SetTopWindow(frame)
     app.MainLoop()
+
+    save_config()
 
 
 if __name__ == '__main__':

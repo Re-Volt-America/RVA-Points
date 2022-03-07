@@ -7,8 +7,8 @@ VSVersionInfo(
   ffi=FixedFileInfo(
     # filevers and prodvers should be always a tuple with four items: (1, 2, 3, 4)
     # Set not needed items to zero 0.
-    filevers=(0, 0, 3, 0),
-    prodvers=(0, 0, 3, 0),
+    filevers=(0, 0, 4, 0),
+    prodvers=(0, 0, 4, 0),
     # Contains a bitmask that specifies the valid bits 'flags'r
     mask=0x3f,
     # Contains a bitmask that specifies the Boolean attributes of the file.
@@ -31,12 +31,12 @@ VSVersionInfo(
       StringTable(
         u'040904e4', [
         StringStruct(u'FileDescription', u'Re-Volt America Points Calculator'),
-        StringStruct(u'FileVersion', u'0.0.3-alpha'),
+        StringStruct(u'FileVersion', u'0.0.4.dev1'),
         StringStruct(u'InternalName', u'RVA-Points'),
-        StringStruct(u'LegalCopyright', u'Copyright (C) BGM 2021'),
+        StringStruct(u'LegalCopyright', u'Copyright (C) BGM 2021-2022'),
         StringStruct(u'OriginalFilename', u'RVA Points'),
         StringStruct(u'ProductName', u'RVA Points'),
-        StringStruct(u'ProductVersion', u'0, 0, 3, -alpha')])
+        StringStruct(u'ProductVersion', u'0, 0, 4, dev1')])
       ]),
     VarFileInfo([VarStruct(u'Translation', [1033, 1252])])
   ]

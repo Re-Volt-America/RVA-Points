@@ -1,7 +1,9 @@
 import yaml
 import os
+import wx
 
 from rva_points_app.common import *
+from rva_points_app.logging import print_log
 
 
 class RVASystem:
@@ -65,8 +67,9 @@ class RVASystem:
         self.__load_cars()
 
     def __load_cars(self):
+        print_log(f"Loading cars...")
         for car_class in CAR_CLASSES:
-            with open(os.path.join(os.getcwd(), "cars", "%s.yaml" % car_class)) as fh:
+            with open(os.path.join(os.getcwd(), "data", "%s.yaml" % car_class)) as fh:
                 read_data = yaml.load(fh, Loader=yaml.FullLoader)
                 self.CARS_INFO = dict(self.CARS_INFO, **read_data)
 
@@ -121,7 +124,16 @@ class RVASystem:
             return 1.0  # The current category is Random, therefore all cars are valid & bonus is always 1.0
 
         car_class = self.get_car_class(car_name)
+        if car_class is None:
+            print_log(f"Car '{car_name}' was not found in the car files.")
+            print_log(f"The parsing process has been aborted. Please resolve the issues and try again.")
+
+            wx.MessageBox(f"Car '{car_name}' was not found in the car files.\nSee the Console for more details.", "Error", wx.OK | wx.ICON_ERROR)
+
+            raise CarNotFound(f"Car '{car_name}' was not found.")
+
         car_class_number = self.CLASS_NUMBERS_MAP[car_class]
+
         if self.category_class_number == 7 and car_class_number == -1:
             return 1.0  # The current category is Clockwork, and player is using a Clockwork, therefore valid and 1.0
         elif self.category_class_number == 7 and car_class_number != -1:
@@ -146,3 +158,7 @@ class RVASystem:
     @staticmethod
     def __get_car_slug(car):
         return car.lower().replace(" ", "_")
+
+
+class CarNotFound(Exception):
+    pass

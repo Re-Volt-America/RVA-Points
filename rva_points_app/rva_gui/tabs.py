@@ -1,10 +1,10 @@
-import os
-import yaml
+from threading import Thread
+
 import wx.grid as grid
 
 from rva_points_app.rva_gui.widgets import *
-from rva_points_app.common import *
 from rva_points_app.session_log import SessionLog
+from rva_points_app.updates import *
 
 
 class CalculateTab(ScrolledTabPage):
@@ -46,7 +46,7 @@ class CalculateTab(ScrolledTabPage):
         self.box_calculate.Add(self.box_calculate_header, 0, wx.EXPAND | wx.ALL, 10)
 
         " Actions Grid "
-        self.box_actions_header = wx.GridSizer(rows=1, cols=2, vgap=0, hgap=0)
+        self.box_actions_header = wx.GridSizer(rows=1, cols=3, vgap=0, hgap=0)
 
         " Actions Box "
         self.box_actions = wx.StaticBoxSizer(wx.VERTICAL, self, "Actions")
@@ -102,10 +102,41 @@ class CalculateTab(ScrolledTabPage):
         self.box_allow_mystery_string.Add(self.allow_mystery_checkbox, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
         self.box_actions.Add(self.box_allow_mystery_string, 1, wx.EXPAND | wx.ALL, 0)
 
+        "Update Box"
+        self.box_update = wx.StaticBoxSizer(wx.VERTICAL, self, "Update")
+        self.box_update.SetMinSize(wx.Size(300, 50))
+        static_box = self.box_update.GetStaticBox()
+
+        self.box_update_parser_string = wx.BoxSizer(wx.HORIZONTAL)
+        self.update_parser_string = wx.StaticText(static_box, -1, "Checking for updates...")
+        self.update_parser_button = wx.Button(static_box, -1, "Update")
+        self.update_parser_button.Disable()
+        self.update_parser_button.Bind(wx.EVT_BUTTON, self.on_update_parser_button_click)
+        self.box_update_parser_string.Add(self.update_parser_string, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+        self.box_update_parser_string.Add(self.update_parser_button, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+        self.box_update.Add(self.box_update_parser_string, 1, wx.EXPAND | wx.ALL, 0)
+
+        self.box_update_data_string = wx.BoxSizer(wx.HORIZONTAL)
+        self.update_data_string = wx.StaticText(static_box, -1, "Checking for updates...")
+        self.update_data_button = wx.Button(static_box, -1, "Update")
+        self.update_data_button.Disable()
+        self.update_data_button.Bind(wx.EVT_BUTTON, self.on_update_data_button_click)
+        self.box_update_data_string.Add(self.update_data_string, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+        self.box_update_data_string.Add(self.update_data_button, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+        self.box_update.Add(self.box_update_data_string, 1, wx.EXPAND | wx.ALL, 0)
+
         " Quick Access Box "
         self.box_quick_access = wx.StaticBoxSizer(wx.VERTICAL, self, "Quick Access")
         self.box_quick_access.SetMinSize(wx.Size(300, 50))
         static_box = self.box_quick_access.GetStaticBox()
+
+        self.box_open_parser_string = wx.BoxSizer(wx.HORIZONTAL)
+        self.open_parser_string = wx.StaticText(static_box, -1, "Parser Folder")
+        self.open_parser_button = wx.Button(static_box, -1, "Open")
+        self.open_parser_button.Bind(wx.EVT_BUTTON, self.on_open_parser_button_click)
+        self.box_open_parser_string.Add(self.open_parser_string, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+        self.box_open_parser_string.Add(self.open_parser_button, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+        self.box_quick_access.Add(self.box_open_parser_string, 1, wx.EXPAND | wx.ALL, 0)
 
         self.box_open_sessions_string = wx.BoxSizer(wx.HORIZONTAL)
         self.open_sessions_string = wx.StaticText(static_box, -1, "Sessions Folder")
@@ -125,12 +156,17 @@ class CalculateTab(ScrolledTabPage):
 
         self.box_actions_header.Add(self.box_actions, 0, wx.ALIGN_LEFT | wx.ALL, 0)
         self.box_actions_header.Add(self.box_quick_access, 1, wx.ALIGN_LEFT | wx.ALL, 1)
+        self.box_actions_header.Add(self.box_update, 2, wx.ALIGN_LEFT | wx.ALL, 2)
         self.box_calculate.Add(self.box_actions_header, 0, wx.EXPAND | wx.ALL, 5)
 
         self.set_class(RVA_CLASSES[CONFIG["default_category"]])
+        self.check_for_updates()
 
     def on_class_selection(self, e):
-        pass
+        if e is None:
+            print_log(f"Selected Class: '{RVA_CLASSES[CONFIG['default_category']].capitalize()}'")
+        else:
+            print_log(f"Selected Class: '{e.GetString()}'")
 
     def on_import_button_click(self, e):
         self.parent.parent.on_import_session_log(e)
@@ -141,6 +177,8 @@ class CalculateTab(ScrolledTabPage):
     def on_calculate_button_click(self, e):
         if self.session is None:
             return
+
+        print_log(f"Calculating Results...")
 
         new_log = SessionLog(self.session_file_path, teams=self.is_parsing_teams())
         self.session = new_log.get_session()
@@ -160,6 +198,25 @@ class CalculateTab(ScrolledTabPage):
 
     def on_allow_mystery_check_mark(self, e):
         self.allows_mystery = not self.allows_mystery
+
+    def on_update_parser_button_click(self, e):
+        parser_update_thread = Thread(target=update_parser, args=[self.update_parser_button, self.update_parser_string])
+        parser_update_thread.start()
+
+    def on_update_data_button_click(self, e):
+        data_update_thread = Thread(target=update_data, args=[self.update_data_button, self.update_data_string])
+        data_update_thread.start()
+
+    def on_open_parser_button_click(self, e):
+        msg = ""
+        directory = os.path.join(os.getcwd())
+        file = ""
+        wildcard = ""
+        dialog = wx.FileDialog(self, msg, directory, file, wildcard)
+        response = dialog.ShowModal()
+
+        if response == wx.ID_OK:
+            os.startfile(dialog.GetPath())
 
     def on_open_sessions_button_click(self, e):
         msg = ""
@@ -190,7 +247,14 @@ class CalculateTab(ScrolledTabPage):
         car_class = (RVA_CLASSES[CONFIG["default_category"]].capitalize(), car_class)[car_class in self.class_options]
         if car_class in self.class_options:
             self.class_selector.SetSelection(self.class_options.index(car_class))
-            self.on_class_selection(car_class)
+            self.on_class_selection(None)
+
+    def check_for_updates(self):
+        parser_update_check_thread = Thread(target=parser_update_available, args=[self.update_parser_button, self.update_parser_string])
+        parser_update_check_thread.start()
+
+        data_update_check_thread = Thread(target=data_update_available, args=[self.update_data_button, self.update_data_string])
+        data_update_check_thread.start()
 
     def get_selected_class_number(self):
         return self.class_selector.GetSelection()
@@ -262,6 +326,8 @@ class PreviewTab(ScrolledTabPage):
         self.__fill_and_style_preview_col_headers()
         self.__fill_preview_content()
         self.__style_preview_content()
+
+        print_log(f"Updated results preview.")
 
     def __fill_and_style_preview_col_headers(self):
         head_col = 0
@@ -402,3 +468,24 @@ class PreviewTab(ScrolledTabPage):
             self.session_grid.DeleteCols(0, current_col_count - cols, True)
         elif cols > current_col_count:
             self.session_grid.AppendCols(cols - current_col_count)
+
+
+class ConsoleTab(TabPage):
+    def __init__(self, parent):
+        TabPage.__init__(self, parent)
+        self.init_ui()
+
+    def init_ui(self):
+        self.box = wx.BoxSizer(wx.VERTICAL)
+
+        self.text_console = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE | wx.TE_READONLY | wx.HSCROLL)
+        self.box.Add(self.text_console, 1, wx.EXPAND | wx.ALL, 5)
+
+        self.Bind(wx.EVT_TIMER, self.on_timer)
+        self.timer = wx.Timer(self, -1)
+        self.timer.Start(1000)
+
+        self.SetSizer(self.box)
+
+    def on_timer(self, e):
+        LogFile.print_ctrl(self.text_console)

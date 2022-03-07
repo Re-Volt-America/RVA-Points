@@ -1,11 +1,13 @@
 import setuptools
 
-with open("README.md", "r", encoding="utf-8") as f:
+from rva_points_app.version import __version__
+
+with open("../README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
 
 setuptools.setup(
     name="rva-points",
-    version="0.0.1-alpha",
+    version=__version__,
     author="BGM",
     author_email="jose@bgmp.cl",
     description="Points calculator for Re-Volt America",
@@ -21,5 +23,5 @@ setuptools.setup(
         "Development Status :: alpha"
     ],
     python_requires='>=3.8',
-    install_requires=['wxPython', 'PyYAML', 'PyInstaller']
+    install_requires=['wxPython', 'PyYAML', 'PyInstaller', 'requests']
 )

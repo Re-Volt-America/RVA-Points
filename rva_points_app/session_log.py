@@ -176,7 +176,11 @@ class Session:
     def get_tracks(self):
         tracks = []
         for race in self.races:
-            tracks.append(self.__get_track_short_name(race.track))
+            track_short_name = self.__get_track_short_name(race.track)
+            if track_short_name == None:
+                tracks.append(str())
+            else:
+                tracks.append(track_short_name)
         return tracks
 
     def get_tracks_played_by(self, racer_name):
@@ -238,13 +242,15 @@ class Session:
     def __get_track_short_name(self, track_name):
         short_name = None
         for track_key in self.TRACK_NAMES:
-            if track_name.startswith(track_key):
+            if track_name == track_key:
                 return self.TRACK_NAMES[track_key]
 
         return short_name
 
-    def __load_track_names(self):
-        with open(os.path.join(os.getcwd(), "tracks", "track_names.yaml")) as fh:
+    @staticmethod
+    def __load_track_names():
+        print_log(f"Loading track names...")
+        with open(os.path.join(os.getcwd(), "data", "track_names.yaml")) as fh:
             return yaml.load(fh, Loader=yaml.FullLoader)
 
 
@@ -336,12 +342,15 @@ class SessionLog:
 
         return races  # There's a None value at the end of the array
 
-    " Search for duplicate session lines and remove them "
+    " Search for duplicate session lines and remove them, as for RVA results we ignore lap counts. "
     @staticmethod
     def __sanitize(log):
+        i = len(log) - 1
         read_host = False
-        for line in log:
-            if line[0] == "Session" and not read_host:
+        while i > 2:
+            if log[i][0] == "Session" and not read_host:
                 read_host = True
-            elif line[0] == "Session":
-                log.remove(line)
+            elif log[i][0] == "Session":
+                log.remove(log[i])
+            else:
+                i = i - 1

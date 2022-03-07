@@ -134,3 +134,7 @@ dmypy.json
 # Session & Result logs
 sessions/*.csv
 results/*.csv
+
+# Config & Data
+config.json
+data/

@@ -29,5 +29,6 @@ Software you will need in order to run the program in development mode.
 - Python modules:
   - wxPython
   - PyYAML
+  - requests
   - PyInstaller (we use it for dist)
 - We suggest the usage of venv & pip for development & dependency management.
