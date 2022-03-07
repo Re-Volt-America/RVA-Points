@@ -17,9 +17,9 @@
 ## Preview Images
 <p align="left">
   <h3>Calculate Tab</h3>
-  <img src="https://user-images.githubusercontent.com/26081543/141656388-a35214aa-4511-4d16-9718-e3036c852d27.PNG" alt=""/>
+  <img src="https://user-images.githubusercontent.com/26081543/156964493-974875a8-057f-4a7e-9611-d7b08f7520da.PNG" alt=""/>
   <h3>Preview Tab</h3>
-  <img src="https://user-images.githubusercontent.com/26081543/129636799-4dc2c318-312c-4214-bedf-5d23a08187b4.PNG" alt=""/>
+  <img src="https://user-images.githubusercontent.com/26081543/156964394-2d2588f8-4e86-4b23-98ab-94c3532a049d.PNG" alt=""/>
 </p>
 
 ### Running
