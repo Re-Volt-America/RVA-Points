@@ -31,12 +31,12 @@ VSVersionInfo(
       StringTable(
         u'040904e4', [
         StringStruct(u'FileDescription', u'Re-Volt America Points Calculator'),
-        StringStruct(u'FileVersion', u'0.0.4.dev1'),
+        StringStruct(u'FileVersion', u'0.0.4.dev2'),
         StringStruct(u'InternalName', u'RVA-Points'),
         StringStruct(u'LegalCopyright', u'Copyright (C) BGM 2021-2022'),
         StringStruct(u'OriginalFilename', u'RVA Points'),
         StringStruct(u'ProductName', u'RVA Points'),
-        StringStruct(u'ProductVersion', u'0, 0, 4, dev1')])
+        StringStruct(u'ProductVersion', u'0, 0, 4, dev2')])
       ]),
     VarFileInfo([VarStruct(u'Translation', [1033, 1252])])
   ]
