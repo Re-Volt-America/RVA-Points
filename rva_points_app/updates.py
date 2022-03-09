@@ -55,7 +55,6 @@ def update_parser(button, text):
                 os.remove(bakfile)
             if os.path.isfile(executable):
                 os.rename(executable, bakfile)
-                os.remove(bakfile)
         except Exception as e:
             print_log(f"Could not create backup file.\n  {e}")
             return
