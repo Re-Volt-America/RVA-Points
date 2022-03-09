@@ -153,7 +153,7 @@ class Session:
                     else:
                         car = race.get_racer_car(result_entry.name)
                         if not car == "Clockwork" and car.startswith("Clockwork"):
-                            car = car.split(" ", 1)[1]
+                            car = car.split(" ", 1)[1]  # Remove 'Clockwork' from the car's name and leave the rest
 
                         racer_cars_line.append(car)
                     last_car_used = car_used
@@ -242,7 +242,7 @@ class Session:
     def __get_track_short_name(self, track_name):
         short_name = None
         for track_key in self.TRACK_NAMES:
-            if track_name == track_key:
+            if track_name in [track_key, f"{track_key} R", f"{track_key} M", f"{track_key} RM"]:
                 return self.TRACK_NAMES[track_key]
 
         return short_name
