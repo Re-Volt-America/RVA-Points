@@ -241,11 +241,13 @@ class Session:
 
     def __get_track_short_name(self, track_name):
         short_name = None
+        actual_name = track_name.encode('cp1252').decode('utf8')  # Blame the '•' in Museum 3
         for track_key in self.TRACK_NAMES:
-            if track_name in [track_key, f"{track_key} R", f"{track_key} M", f"{track_key} RM"]:
+            if actual_name in [track_key, f"{track_key} R", f"{track_key} M", f"{track_key} RM"]:
                 return self.TRACK_NAMES[track_key]
 
-        return short_name
+        print_log(f"No short name found for track '{actual_name}'")
+        return str()
 
     @staticmethod
     def __load_track_names():
