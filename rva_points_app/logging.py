@@ -1,5 +1,5 @@
 """
-Name: widgets.py
+Name: logging.py
 Author: https://gitlab.com/re-volt/rvgl-launcher/-/blob/master/rv_launcher/logging.py
 """
 
