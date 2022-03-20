@@ -130,14 +130,6 @@ class CalculateTab(ScrolledTabPage):
         self.box_quick_access.SetMinSize(wx.Size(300, 50))
         static_box = self.box_quick_access.GetStaticBox()
 
-        self.box_open_parser_string = wx.BoxSizer(wx.HORIZONTAL)
-        self.open_parser_string = wx.StaticText(static_box, -1, "Parser Folder")
-        self.open_parser_button = wx.Button(static_box, -1, "Open")
-        self.open_parser_button.Bind(wx.EVT_BUTTON, self.on_open_parser_button_click)
-        self.box_open_parser_string.Add(self.open_parser_string, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-        self.box_open_parser_string.Add(self.open_parser_button, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-        self.box_quick_access.Add(self.box_open_parser_string, 1, wx.EXPAND | wx.ALL, 0)
-
         self.box_open_sessions_string = wx.BoxSizer(wx.HORIZONTAL)
         self.open_sessions_string = wx.StaticText(static_box, -1, "Sessions Folder")
         self.open_sessions_button = wx.Button(static_box, -1, "Open")
@@ -153,6 +145,14 @@ class CalculateTab(ScrolledTabPage):
         self.box_open_results_string.Add(self.open_results_string, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
         self.box_open_results_string.Add(self.open_results_button, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
         self.box_quick_access.Add(self.box_open_results_string, 1, wx.EXPAND | wx.ALL, 0)
+
+        self.box_open_parser_string = wx.BoxSizer(wx.HORIZONTAL)
+        self.open_parser_string = wx.StaticText(static_box, -1, "Parser Folder")
+        self.open_parser_button = wx.Button(static_box, -1, "Open")
+        self.open_parser_button.Bind(wx.EVT_BUTTON, self.on_open_parser_button_click)
+        self.box_open_parser_string.Add(self.open_parser_string, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+        self.box_open_parser_string.Add(self.open_parser_button, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+        self.box_quick_access.Add(self.box_open_parser_string, 1, wx.EXPAND | wx.ALL, 0)
 
         self.box_actions_header.Add(self.box_actions, 0, wx.ALIGN_LEFT | wx.ALL, 0)
         self.box_actions_header.Add(self.box_quick_access, 1, wx.ALIGN_LEFT | wx.ALL, 1)
