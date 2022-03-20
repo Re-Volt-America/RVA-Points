@@ -17,8 +17,8 @@ Fixed:
 0.0.4.dev2
 ===
 Fixed:
-- Fixed [WinError 5] Access Denied when trying to update+
-- Fixed reverse track names not displaying in results
+- Fixed [WinError 5] Access Denied when trying to update.
+- Fixed reverse track names not displaying in results.
 
 0.0.4.dev1
 ===
