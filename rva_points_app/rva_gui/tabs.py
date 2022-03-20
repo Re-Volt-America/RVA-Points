@@ -14,7 +14,7 @@ class CalculateTab(ScrolledTabPage):
         self.session = None
         self.session_file_name = None
         self.session_file_path = None
-        self.teams = False
+        self.teams = CONFIG["teams"]
         self.allows_mystery = False
 
     def init_ui(self):
@@ -89,6 +89,7 @@ class CalculateTab(ScrolledTabPage):
         self.teams_string = wx.StaticText(static_box, -1, "Teams Session")
         self.teams_checkbox = wx.CheckBox(static_box, -1, label="")
         self.teams_checkbox.Bind(wx.EVT_CHECKBOX, self.on_teams_check_mark)
+        self.teams_checkbox.SetValue(CONFIG["teams"])
         self.box_teams_string.Add(self.teams_string, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
         self.box_teams_string.Add(self.teams_checkbox, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
         self.box_actions.Add(self.box_teams_string, 1, wx.EXPAND | wx.ALL, 0)
@@ -195,6 +196,8 @@ class CalculateTab(ScrolledTabPage):
 
     def on_teams_check_mark(self, e):
         self.teams = not self.teams
+        CONFIG["teams"] = self.teams
+
 
     def on_allow_mystery_check_mark(self, e):
         self.allows_mystery = not self.allows_mystery

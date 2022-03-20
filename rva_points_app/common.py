@@ -34,7 +34,8 @@ CONFIG = {
     "app_launch_window_size": (1000, 600),
     "git_url": "https://github.com/Re-Volt-America/RVA-Points",
     "git_issues_url": "https://github.com/Re-Volt-America/RVA-Points/issues",
-    "show-console": False
+    "show-console": False,
+    "teams": False
 }
 
 """ Returns the application base folder """
