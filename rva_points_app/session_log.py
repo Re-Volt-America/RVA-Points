@@ -110,7 +110,7 @@ class Session:
         position = 1
         racer_result_entries = self.get_racer_result_entries()
         for result_entry in racer_result_entries:
-            racer_positions_line = [str(position), result_entry.name]
+            racer_positions_line = [str(position), result_entry.name.split(" ")[1] if self.teams else result_entry.name]
 
             if self.teams:
                 racer_positions_line.append(result_entry.team)
