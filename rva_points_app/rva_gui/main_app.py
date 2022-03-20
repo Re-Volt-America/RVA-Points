@@ -114,7 +114,7 @@ class FrameMain(wx.Frame):
         if response == wx.ID_OK:
             print_log(f"Exporting Session Log to '{file}'...")
 
-            with open(os.path.join(directory, file), "w+", newline='') as csv_file:
+            with open(os.path.join(dialog.GetDirectory(), file), "w+", newline='') as csv_file:
                 writer = csv.writer(csv_file, delimiter=",")
                 writer.writerows(self.calculate_tab.session.get_rva_results())
                 csv_file.close()
