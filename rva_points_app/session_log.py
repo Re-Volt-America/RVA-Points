@@ -110,7 +110,12 @@ class Session:
         position = 1
         racer_result_entries = self.get_racer_result_entries()
         for result_entry in racer_result_entries:
-            racer_positions_line = [str(position), result_entry.name.split(" ")[1] if self.teams else result_entry.name]
+            try:
+                racer_positions_line = [str(position), result_entry.name.split(" ")[1] if self.teams else result_entry.name]
+            except IndexError:
+                print_log(f"Racer {result_entry.name} does not have a team.")
+                print_log(f"Unable to parse session. Either remove the player or add a team prefix.")
+                return
 
             if self.teams:
                 racer_positions_line.append(result_entry.team)
