@@ -21,36 +21,36 @@ def fetch_data(update=False):
     for car_class in CAR_CLASSES:
         file = f"data/{car_class}.yaml"
         if update:
-            r = requests.get(f"{APP_DATA_URL}/{car_class}.yaml")
+            r = requests.get(f"{RVA_DATA_URL}/yaml/{car_class}.yaml")
             create_file(f"data/{car_class}.yaml", r.text)
         else:
             if not os.path.isfile(file):
-                r = requests.get(f"{APP_DATA_URL}/{car_class}.yaml")
+                r = requests.get(f"{RVA_DATA_URL}/yaml/{car_class}.yaml")
                 create_file(f"data/{car_class}.yaml", r.text)
 
     tracks_file = "data/track_names.yaml"
     if update:
-        r = requests.get(f"{APP_DATA_URL}/track_names.yaml")
+        r = requests.get(f"{RVA_DATA_URL}/yaml/track_names.yaml")
         create_file(tracks_file, r.text)
     else:
         if not os.path.isfile(tracks_file):
-            r = requests.get(f"{APP_DATA_URL}/track_names.yaml")
+            r = requests.get(f"{RVA_DATA_URL}/yaml/track_names.yaml")
             create_file(tracks_file, r.text)
 
-    data_version_file = "data/version/rva_points_data.json"
+    data_version_file = "data/version/rva_data.json"
     if update:
-        r = requests.get(f"{APP_DATA_URL}/rva_points_data.json")
+        r = requests.get(f"{RVA_DATA_URL}/rva_data.json")
         create_file(data_version_file, r.text)
     else:
         if not os.path.isfile(tracks_file):
-            r = requests.get(f"{APP_DATA_URL}/rva_points_data.json")
+            r = requests.get(f"{RVA_DATA_URL}/rva_data.json")
             create_file(data_version_file, r.text)
 
 """ Retrieves the data version number from its version folder. If not found, a new data version file is downloaded. """
 def get_data_version():
-    data_version_file_path = os.path.join(os.getcwd(), "data/version/rva_points_data.json")
+    data_version_file_path = os.path.join(os.getcwd(), "data/version/rva_data.json")
     if not os.path.isfile(data_version_file_path):
-        r = requests.get(f"{APP_DATA_URL}/rva_points_data.json")
+        r = requests.get(f"{RVA_DATA_URL}/rva_data.json")
         create_file(data_version_file_path, r.text)
 
     with open(data_version_file_path, "r") as f:

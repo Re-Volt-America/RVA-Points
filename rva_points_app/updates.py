@@ -21,17 +21,17 @@ def parser_update_available(button, text):
 
 
 def data_update_available(button, text):
-    r = requests.get(f"{APP_DATA_URL}/rva_points_data.json")
+    r = requests.get(f"{RVA_DATA_URL}/rva_data.json")
     if r.status_code == 200:
         version = r.json()["version"]
         if version != get_data_version():
             button.Enable()
             text.SetLabelText(f"Data v{version} is available!")
-            print_log(f"New Data version detected: {version}")
+            print_log(f"New RVA Data version detected: {version}")
         else:
-            text.SetLabelText(f"Data is up to date.")
+            text.SetLabelText(f"RVA Data is up to date.")
     else:
-        print_log(f"Unable to retrieve data update. Error {r.status_code}.")
+        print_log(f"Unable to retrieve RVA Data update. Error {r.status_code}.")
         text.SetLabelText("Unable to retrieve update info.")
 
 
@@ -41,10 +41,10 @@ def update_parser(button, text):
 
     if sys.platform == "win32":
         executable = "rva_points.exe"
-        url = f"{APP_DATA_URL}/{executable}"
+        url = f"{RVA_POINTS_URL}/{executable}"
     else:
         executable = "rva_points"
-        url = f"{APP_DATA_URL}/{executable}"
+        url = f"{RVA_POINTS_URL}/{executable}"
 
     # Cannot replace a running application on Windows
     # but renaming should work
