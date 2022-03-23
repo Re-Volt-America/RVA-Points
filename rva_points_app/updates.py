@@ -10,14 +10,14 @@ def parser_update_available(button, text):
     if r.status_code == 200:
         version = r.json()["version"]
         if version != __version__:
-            button.Enable()
-            text.SetLabelText(f"Parser v{version} is available!")
+            wx.CallAfter(button.Enable)
+            wx.CallAfter(text.SetLabelText, f"Parser v{version} is available!")
             print_log(f"New Parser version detected: {version}")
         else:
-            text.SetLabelText(f"Parser is up to date.")
+            wx.CallAfter(text.SetLabelText, f"Parser is up to date.")
     else:
         print_log(f"Unable to retrieve data update. Error {r.status_code}.")
-        text.SetLabelText("Unable to retrieve update info.")
+        wx.CallAfter(text.SetLabelText, f"Unable to retrieve update info.")
 
 
 def data_update_available(button, text):
@@ -25,19 +25,19 @@ def data_update_available(button, text):
     if r.status_code == 200:
         version = r.json()["version"]
         if version != get_data_version():
-            button.Enable()
-            text.SetLabelText(f"Data v{version} is available!")
+            wx.CallAfter(button.Enable)
+            wx.CallAfter(text.SetLabelText, f"Data v{version} is available!")
             print_log(f"New RVA Data version detected: {version}")
         else:
-            text.SetLabelText(f"RVA Data is up to date.")
+            wx.CallAfter(text.SetLabelText, f"RVA Data is up to date.")
     else:
         print_log(f"Unable to retrieve RVA Data update. Error {r.status_code}.")
-        text.SetLabelText("Unable to retrieve update info.")
+        wx.CallAfter(text.SetLabelText, "Unable to retrieve update info.")
 
 
 def update_parser(button, text):
-    button.Disable()
-    text.SetLabelText("Updating...")
+    wx.CallAfter(button.Disable)
+    wx.CallAfter(text.SetLabelText, "Updating...")
 
     if sys.platform == "win32":
         executable = "rva_points.exe"
@@ -63,22 +63,22 @@ def update_parser(button, text):
     if r.status_code == 200:
         open(executable, 'wb').write(r.content)
 
-        text.SetLabelText("Pending restart.")
+        wx.CallAfter(text.SetLabelText, "Pending restart.")
         wx.MessageBox("Parser has been updated.\nRestart to begin using the new version.", "Info", wx.OK | wx.ICON_INFORMATION)
 
         wx.Exit()
         os.startfile(executable)
     else:
         print_log(f"Unable to retrieve parser update. Error {r.status_code}.")
-        button.Enable()
-        text.SetLabelText("Unable to retrieve update info.")
+        wx.CallAfter(button.Enable)
+        wx.CallAfter(text.SetLabelText, "Unable to retrieve update info.")
 
 
 def update_data(button, text):
-    button.Disable()
-    text.SetLabelText("Updating...")
+    wx.CallAfter(button.Disable)
+    wx.CallAfter(text.SetLabelText, "Updating...")
 
     fetch_data(update=True)
 
-    button.Enable()
-    text.SetLabelText("Data is up to date.")
+    wx.CallAfter(button.Enable)
+    wx.CallAfter(text.SetLabelText, "Data is up to date.")
