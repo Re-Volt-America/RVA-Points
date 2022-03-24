@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="200" width="200" src="https://user-images.githubusercontent.com/26081543/129637656-c5014e3e-cdf6-4437-9e0d-157bc63c14e7.png" />
+  <img alt="" height="200" width="200" src="https://user-images.githubusercontent.com/26081543/129637656-c5014e3e-cdf6-4437-9e0d-157bc63c14e7.png" />
 </p>
 
 
@@ -15,12 +15,12 @@
 
 
 ## Preview Images
-<p align="left">
+<div align="left">
   <h3>Calculate Tab</h3>
   <img src="https://user-images.githubusercontent.com/26081543/156964493-974875a8-057f-4a7e-9611-d7b08f7520da.PNG" alt=""/>
   <h3>Preview Tab</h3>
   <img src="https://user-images.githubusercontent.com/26081543/156964394-2d2588f8-4e86-4b23-98ab-94c3532a049d.PNG" alt=""/>
-</p>
+</div>
 
 ### Running
 Software you will need in order to run the program in development mode.
@@ -30,5 +30,6 @@ Software you will need in order to run the program in development mode.
   - wxPython
   - PyYAML
   - requests
+  - packaging
   - PyInstaller (we use it for dist)
 - We suggest the usage of venv & pip for development & dependency management. (In case of Apple Silicon use conda)

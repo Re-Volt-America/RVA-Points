@@ -28,7 +28,7 @@ class LogFile:
 
         try:
             with open(self.path, "w", encoding="utf-8") as f:
-                f.write(f"RVGL Launcher Log File\n")
+                f.write(f"RVA Points Log File\n")
         except Exception as e:
             self.write_out(f"Could not initialize log file.\n  {e}\n")
 
