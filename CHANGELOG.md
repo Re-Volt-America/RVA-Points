@@ -16,9 +16,9 @@ Changed:
 
 Fixed:
 - Fixed Fatal IO error 11 on Linux when updating.
-- Fix OSError: [Errno 26] Text file busy on Linux when updating.
-- Fix file contents being altered when fetching from distribute.
-- Fix [Linux] Pango:ERROR:pango-layout.c:3871.
+- Fixed OSError: [Errno 26] Text file busy on Linux when updating.
+- Fixed file contents being altered when fetching from distribute.
+- Fixed [Linux] Pango:ERROR:pango-layout.c:3871.
 
 0.1.4.dev1
 ===
