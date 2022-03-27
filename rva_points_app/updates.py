@@ -36,15 +36,22 @@ def data_update_available(button, text):
 
 
 def update_parser(button, text):
+    if os.path.isdir(".git"):
+        print_log("Skipping update check in development repo.")
+        wx.CallAfter(button.Disable)
+        wx.CallAfter(text.SetLabelText, "Skipped in dev repo.")
+        return
+
     wx.CallAfter(button.Disable)
     wx.CallAfter(text.SetLabelText, "Updating...")
 
-    if sys.platform == "win32":
+    if PLATFORM == "win64":
         executable = "rva_points.exe"
-        url = f"{RVA_POINTS_URL}/{executable}"
-    else:
+        url = f"{RVA_POINTS_URL}/win64/{executable}"
+    elif PLATFORM == "linux":
         executable = "rva_points"
-        url = f"{RVA_POINTS_URL}/{executable}"
+        url = f"{RVA_POINTS_URL}/linux/{executable}"
+    # elif PLATFORM == "macOS": FIXME: This needs to be implemented, but im too lazy lol
 
     # Cannot replace a running application on Windows
     # but renaming should work
