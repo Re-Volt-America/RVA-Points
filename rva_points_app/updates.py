@@ -74,7 +74,8 @@ def update_parser(button, text):
         wx.MessageBox("Parser has been updated.\nRestart to begin using the new version.", "Info", wx.OK | wx.ICON_INFORMATION)
 
         wx.Exit()
-        os.startfile(executable)
+        if PLATFORM == 'win32':
+            os.startfile(executable)
     else:
         print_log(f"Unable to retrieve parser update. Error {r.status_code}.")
         wx.CallAfter(button.Enable)
