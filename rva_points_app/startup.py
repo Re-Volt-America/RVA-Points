@@ -73,7 +73,7 @@ def create_folder(folder):
 def create_file(file, contents):
     try:
         file = open(file, 'w')
-        file.writelines(contents) if PLATFORM == "macOS" else file.writelines(contents.split("\n"))
+        file.writelines(contents)
         print_log(f"Created file '{file.name}'")
 
     except Exception as e:
