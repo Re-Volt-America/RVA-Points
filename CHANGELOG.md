@@ -1,7 +1,7 @@
 0.0.1.5.dev5
 ===
 Added:
-- Added a full deployment pipeline via GitHub Actions
+- Added a full deployment pipeline via GitHub Actions.
 - Added Full support for Linux platforms. (Compiling against Ubuntu 18.04)
 - Added partial Beta support for MacOS Intel & Apple Silicon platforms. (Compiling against MacOS 10.15) (needs testing)
 
