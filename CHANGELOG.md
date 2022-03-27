@@ -1,4 +1,4 @@
-0.0.1.5.dev5
+0.0.1.5.dev6
 ===
 Added:
 - Added a full deployment pipeline via GitHub Actions.
