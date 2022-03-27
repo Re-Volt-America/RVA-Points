@@ -1,13 +1,13 @@
 0.1.4.dev1
 ===
-Fixed:
-- Fixed exporting results always saving result files to results/ regardless of the selected directory via dialog.
-- Fixed version having changed to 0.1.0.dev0.
-
 Changed:
 - When parsing team sessions, players display without their team prefix next to their names on preview and exported results.
 - Moved Open Parser Folder button to the bottom of the Quick Access box.
 - Changed Teams Session checkbox's selection status to be persistent.
+
+Fixed:
+- Fixed exporting results always saving result files to results/ regardless of the selected directory via dialog.
+- Fixed version having changed to 0.1.0.dev0.
 
 0.0.4.dev3
 ===
