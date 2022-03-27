@@ -19,6 +19,7 @@ Fixed:
 - Fixed OSError: [Errno 26] Text file busy on Linux when updating.
 - Fixed file contents being altered when fetching from distribute.
 - Fixed [Linux] Pango:ERROR:pango-layout.c:3871.
+- Fixed files not opening on linux & macOS platforms.
 
 0.1.4.dev1
 ===
