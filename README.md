@@ -15,7 +15,7 @@
   2. Depending on your platform:
      * Windows: Execute `rva_points.exe`.
      * Linux: Run `rva_points` from commandline (you may need to grant permissions).
-     * MacOS: De-Compress & use the application by double clicking rva_points.
+     * MacOS: Decompress & use the application by double clicking rva_points.
 
 ## Preview Images
 <div align="left">
