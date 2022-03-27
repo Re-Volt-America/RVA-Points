@@ -31,7 +31,7 @@ VSVersionInfo(
       StringTable(
         u'040904e4', [
         StringStruct(u'FileDescription', u'Re-Volt America Points Calculator'),
-        StringStruct(u'FileVersion', u'0.0.1.5.dev3'),
+        StringStruct(u'FileVersion', u'0.0.1.5.dev4'),
         StringStruct(u'InternalName', u'RVA Points'),
         StringStruct(u'LegalCopyright', u'Copyright (C) BGM 2021-2022'),
         StringStruct(u'OriginalFilename', u'RVA Points'),
