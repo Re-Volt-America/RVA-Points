@@ -55,7 +55,7 @@ def update_parser(button, text):
 
     # Cannot replace a running application on Windows
     # but renaming should work
-    if sys.platform == "win32":
+    if sys.platform in ['win32', 'linux']:
         bakfile = f"{executable}.bak"
         try:
             if os.path.isfile(bakfile):
