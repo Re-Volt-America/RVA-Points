@@ -1,3 +1,25 @@
+0.0.1.5.dev5
+===
+Added:
+- Added a full deployment pipeline via GitHub Actions
+- Added Full support for Linux platforms. (Compiling against Ubuntu 18.04)
+- Added partial Beta support for MacOS Intel & Apple Silicon platforms. (Compiling against MacOS 10.15) (needs testing)
+
+Changed:
+- The parser will now only auto-exit after update if on Windows.
+- Update setup.py to include missing dependencies.
+- Changed automatic updates to reflect deploy changes.
+- Changed version format.
+  - Previously: x.x.x.devx.
+  - Now: x.x.x.x.devx.
+- Changed RVA-Data distribute paths for fetching.
+
+Fixed:
+- Fixed Fatal IO error 11 on Linux when updating.
+- Fix OSError: [Errno 26] Text file busy on Linux when updating.
+- Fix file contents being altered when fetching from distribute.
+- Fix [Linux] Pango:ERROR:pango-layout.c:3871.
+
 0.1.4.dev1
 ===
 Changed:
