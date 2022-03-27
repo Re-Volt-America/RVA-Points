@@ -1,6 +1,7 @@
 from threading import Thread
 
 import wx.grid as grid
+import subprocess
 
 from rva_points_app.rva_gui.widgets import *
 from rva_points_app.session_log import SessionLog
@@ -219,7 +220,10 @@ class CalculateTab(ScrolledTabPage):
         response = dialog.ShowModal()
 
         if response == wx.ID_OK:
-            os.startfile(dialog.GetPath())
+            if PLATFORM == "win32":
+                os.startfile(dialog.GetPath())
+            elif PLATFORM in ["linux", "macOS"]:
+                subprocess.call(["open", dialog.GetPath()])
 
     def on_open_sessions_button_click(self, e):
         msg = ""
@@ -229,8 +233,11 @@ class CalculateTab(ScrolledTabPage):
         dialog = wx.FileDialog(self, msg, directory, file, wildcard)
         response = dialog.ShowModal()
 
-        if response == wx.ID_OK:
-            os.startfile(dialog.GetPath())
+        if response == wx.ID_OK and PLATFORM == "win32":
+            if PLATFORM == "win32":
+                os.startfile(dialog.GetPath())
+            elif PLATFORM in ["linux", "macOS"]:
+                subprocess.call(["open", dialog.GetPath()])
 
     def on_open_results_button_click(self, e):
         msg = ""
@@ -240,8 +247,11 @@ class CalculateTab(ScrolledTabPage):
         dialog = wx.FileDialog(self, msg, directory, file, wildcard)
         response = dialog.ShowModal()
 
-        if response == wx.ID_OK:
-            os.startfile(dialog.GetPath())
+        if response == wx.ID_OK and PLATFORM == "win32":
+            if PLATFORM == "win32":
+                os.startfile(dialog.GetPath())
+            elif PLATFORM in ["linux", "macOS"]:
+                subprocess.call(["open", dialog.GetPath()])
 
     def set_class(self, car_class):
         if car_class is not None:
