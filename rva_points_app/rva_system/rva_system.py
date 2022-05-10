@@ -153,7 +153,11 @@ class RVASystem:
         if car_bonus is None:
             return 0.0  # Car is above the current category's class, therefore points are invalidated
         else:
-            return self.get_position_score(racer_entry.position) * self.get_car_multiplier(racer_entry.car) * car_bonus
+            final_mult = self.get_car_multiplier(racer_entry.car) * car_bonus
+            if final_mult > 4.0:
+                final_mult = 4.0
+
+            return self.get_position_score(racer_entry.position) * final_mult
 
     @staticmethod
     def __get_car_slug(car):
