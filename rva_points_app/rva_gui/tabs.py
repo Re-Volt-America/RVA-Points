@@ -199,7 +199,6 @@ class CalculateTab(ScrolledTabPage):
         self.teams = not self.teams
         CONFIG["teams"] = self.teams
 
-
     def on_allow_mystery_check_mark(self, e):
         self.allows_mystery = not self.allows_mystery
 
@@ -233,11 +232,14 @@ class CalculateTab(ScrolledTabPage):
         dialog = wx.FileDialog(self, msg, directory, file, wildcard)
         response = dialog.ShowModal()
 
-        if response == wx.ID_OK and PLATFORM == "win32":
-            if PLATFORM == "win32":
-                os.startfile(dialog.GetPath())
-            elif PLATFORM in ["linux", "macos"]:
-                subprocess.call(["open", dialog.GetPath()])
+        if sys.platform == "win32":
+            os.startfile(dialog.GetPath())
+        elif sys.platform in ["linux", "darwin"]:
+            error = subprocess.call(["open", dialog.GetPath()])
+            if error:
+                # This causes a Warning to be thrown on mac for some reason? Minor, but should be resolved
+                wx.MessageBox(f"No application associated to {dialog.Filename}'s file type", "Info",
+                              wx.OK | wx.ICON_INFORMATION)
 
     def on_open_results_button_click(self, e):
         msg = ""
@@ -247,11 +249,14 @@ class CalculateTab(ScrolledTabPage):
         dialog = wx.FileDialog(self, msg, directory, file, wildcard)
         response = dialog.ShowModal()
 
-        if response == wx.ID_OK and PLATFORM == "win32":
-            if PLATFORM == "win32":
+        if response == wx.ID_OK:
+            if sys.platform == "win32":
                 os.startfile(dialog.GetPath())
-            elif PLATFORM in ["linux", "macos"]:
-                subprocess.call(["open", dialog.GetPath()])
+            elif sys.platform in ["linux", "darwin"]:
+                error = subprocess.call(["open", dialog.GetPath()])
+                if error:
+                    wx.MessageBox(f"No application associated to {dialog.Filename}'s file type", "Info",
+                                  wx.OK | wx.ICON_INFORMATION)
 
     def set_class(self, car_class):
         if car_class is not None:
