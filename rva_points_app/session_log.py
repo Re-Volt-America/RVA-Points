@@ -157,8 +157,9 @@ class Session:
                         racer_cars_line.append(str())
                     else:
                         car = race.get_racer_car(result_entry.name)
+                        # Remove 'Clockwork' from the car's name and leave the rest, except if it's just 'Clockwork'
                         if not car == "Clockwork" and car.startswith("Clockwork"):
-                            car = car.split(" ", 1)[1]  # Remove 'Clockwork' from the car's name and leave the rest
+                            car = car.split(" ", 1)[1]
 
                         racer_cars_line.append(car)
                     last_car_used = car_used
