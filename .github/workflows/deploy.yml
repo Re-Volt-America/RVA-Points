@@ -85,7 +85,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: "./dist/win64/"
           server-dir: "rva_points/win64/"
-  macOS:
+  macos:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v3
@@ -103,29 +103,29 @@ jobs:
          python -m pip install wxPython
       - name: Compile using pyinstaller
         run: |
-         pyinstaller rva_points.py -w --onefile --windowed --workpath dist/macOS/build --distpath ./dist/macOS --icon icons/icon.ico
-         mv ./dist/macOS/rva_points.app .
+         pyinstaller rva_points.py -w --onefile --windowed --workpath dist/macos/build --distpath ./dist/macos --icon icons/icon.ico
+         mv ./dist/macos/rva_points.app .
       - name: Prepare release
         uses: papeloto/action-zip@v1
         with:
           files: rva_points.app icons
-          dest: rva_points_macOS.zip
+          dest: rva_points_macos.zip
           recursive: false
       - name: Prepare FTP directories
         run: |
-          rm -r ./dist/macOS/build
-          mv rva_points_macOS.zip ./dist/macOS
-#         mv rva_points.app ./dist/macOS   FIXME: Ignore standalone app until automatic updates for macOS are resolved.
+          rm -r ./dist/macos/build
+          mv rva_points_macos.zip ./dist/macos
+#         mv rva_points.app ./dist/macos   FIXME: Ignore standalone app until automatic updates for macos are resolved.
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: "./dist/macOS/"
-          server-dir: "rva_points/macOS/"
+          local-dir: "./dist/macos/"
+          server-dir: "rva_points/macos/"
   version:
-    needs: [linux, win64, macOS]
+    needs: [linux, win64, macos]
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v3

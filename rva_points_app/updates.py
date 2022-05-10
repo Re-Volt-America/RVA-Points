@@ -51,7 +51,7 @@ def update_parser(button, text):
     elif PLATFORM == "linux":
         executable = "rva_points"
         url = f"{RVA_POINTS_URL}/linux/{executable}"
-    # elif PLATFORM == "macOS": FIXME: This needs to be implemented, but im too lazy lol
+    # elif PLATFORM == "macos": FIXME: This needs to be implemented, but im too lazy lol
 
     # Cannot replace a running application on Windows
     # but renaming should work

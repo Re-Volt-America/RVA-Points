@@ -1,3 +1,4 @@
+import os
 import sys
 import platform
 
@@ -23,7 +24,7 @@ elif sys.platform == "win32":
     else:
         PLATFORM = "win32"
 elif sys.platform == "darwin":
-    PLATFORM = "macOS"
+    PLATFORM = "macos"
 
 log_file = None
 

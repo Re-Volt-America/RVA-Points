@@ -222,7 +222,7 @@ class CalculateTab(ScrolledTabPage):
         if response == wx.ID_OK:
             if PLATFORM == "win32":
                 os.startfile(dialog.GetPath())
-            elif PLATFORM in ["linux", "macOS"]:
+            elif PLATFORM in ["linux", "macos"]:
                 subprocess.call(["open", dialog.GetPath()])
 
     def on_open_sessions_button_click(self, e):
@@ -236,7 +236,7 @@ class CalculateTab(ScrolledTabPage):
         if response == wx.ID_OK and PLATFORM == "win32":
             if PLATFORM == "win32":
                 os.startfile(dialog.GetPath())
-            elif PLATFORM in ["linux", "macOS"]:
+            elif PLATFORM in ["linux", "macos"]:
                 subprocess.call(["open", dialog.GetPath()])
 
     def on_open_results_button_click(self, e):
@@ -250,7 +250,7 @@ class CalculateTab(ScrolledTabPage):
         if response == wx.ID_OK and PLATFORM == "win32":
             if PLATFORM == "win32":
                 os.startfile(dialog.GetPath())
-            elif PLATFORM in ["linux", "macOS"]:
+            elif PLATFORM in ["linux", "macos"]:
                 subprocess.call(["open", dialog.GetPath()])
 
     def set_class(self, car_class):

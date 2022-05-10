@@ -28,7 +28,7 @@ version = content["__version__"]
 appinfo = {}
 appinfo["version"] = version
 
-for platform in ["win64", "linux", "macOS"]:
+for platform in ["win64", "linux", "macos"]:
     fname = f"rva_points_{platform}.zip"
     url = f"{RVGL_URL}{platform}/{fname}"
 
