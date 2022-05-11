@@ -1,3 +1,16 @@
+0.0.2.0
+===
+Added:
+- Cap to the maximum multiplier to 4.0 (including bonus).
+
+Changed:
+- Rename macOS to macos internally.
+- Now scoring is determined for each individual race.
+- Updated build.sh.
+
+Fixed:
+- Fixed file dialogs ignoring files being opened.
+
 0.0.1.5.dev6
 ===
 Added:
