@@ -1,9 +1,9 @@
 #!/bin/bash
 
-rm -r dist
-rm -r build
+[ -e dist ] && rm -r dist
+[ -e build ] && rm -r build
 
-pyinstaller rva_points.spec -w --onefile
+pyinstaller rva_points.spec
 
 mkdir dist/rva_points
 
