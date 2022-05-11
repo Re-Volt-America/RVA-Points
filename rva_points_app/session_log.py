@@ -230,8 +230,11 @@ class Session:
 
     def get_obtained_points(self, racer_name):
         obtained_points = 0
-        for racer_entry in self.get_racer_entries_of(racer_name):
-            obtained_points = obtained_points + self.rva_system.get_racer_score(racer_entry)
+
+        for race in self.races:
+            for racer_entry in race.racers:
+                if racer_entry.name == racer_name:
+                    obtained_points = obtained_points + self.rva_system.get_racer_score(racer_entry, race)
 
         return round(obtained_points, 0)
 
@@ -246,7 +249,6 @@ class Session:
         return len(races_played)
 
     def __get_track_short_name(self, track_name):
-        short_name = None
         actual_name = track_name.encode('cp1252').decode('utf8')  # Blame the '•' in Museum 3
         for track_key in self.TRACK_NAMES:
             if actual_name in [track_key, f"{track_key} R", f"{track_key} M", f"{track_key} RM"]:
@@ -311,7 +313,7 @@ class SessionLog:
 
     def __get_session(self):
         races = self.__get_races()
-        rva_system = RVASystem(len(races[0].racers))
+        rva_system = RVASystem()
 
         return Session(self.SESSION_INFO[1][2],  # Host
                        self.SESSION_INFO[0][1],  # RVGL Version

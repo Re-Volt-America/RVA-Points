@@ -8,7 +8,7 @@ from rva_points_app.logging import print_log
 
 class RVASystem:
 
-    def __init__(self, initial_racer_count):
+    def __init__(self):
         """
         Maps the difference of car classes between session and racer to the correspondent bonus multiplier.  When a
         session category class is higher than the class of the car a racer used, a racer's score gets multiplied
@@ -35,34 +35,31 @@ class RVASystem:
         self.NORMALIZER_CONSTANT = 0.1
         self.CARS_INFO = {}
 
-        self.initial_racer_count = initial_racer_count
         self.category_class_number = None
         self.allows_mystery = False
 
-        if self.initial_racer_count > 10:
-            self.SCORING = {
-                1: 20,
-                2: 16,
-                3: 12,
-                4: 10,
-                5: 8, 6: 8,
-                7: 6,
-                8: 4,
-                9: 2, 10: 2,
-                11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1
-            }
-        else:
-            self.SCORING = {
-                1: 15,
-                2: 12,
-                3: 10,
-                4: 7,
-                5: 5,
-                6: 4,
-                7: 2, 8: 2,
-                9: 1,
-                10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1
-            }
+        self.SCORING = {
+            1: 20,
+            2: 16,
+            3: 12,
+            4: 10,
+            5: 8, 6: 8,
+            7: 6,
+            8: 4,
+            9: 2, 10: 2,
+            11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1
+        }
+        self.BIG_SCORING = {
+            1: 15,
+            2: 12,
+            3: 10,
+            4: 7,
+            5: 5,
+            6: 4,
+            7: 2, 8: 2,
+            9: 1,
+            10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1
+        }
 
         self.__load_cars()
 
@@ -112,8 +109,11 @@ class RVASystem:
                 break
         return clazz
 
-    def get_position_score(self, position):
-        return self.SCORING[position]
+    def get_position_score(self, position, big_scoring):
+        if big_scoring:
+            return self.BIG_SCORING[position]
+        else:
+            return self.SCORING[position]
 
     def get_car_bonus(self, car_name):
         if car_name == "Mystery":
@@ -147,7 +147,7 @@ class RVASystem:
         else:
             return self.BONUSES_PER_CLASS_DIFF[car_class_delta]
 
-    def get_racer_score(self, racer_entry):
+    def get_racer_score(self, racer_entry, race):
         car_bonus = self.get_car_bonus(racer_entry.car)
 
         if car_bonus is None:
@@ -157,7 +157,7 @@ class RVASystem:
             if final_mult > 4.0:
                 final_mult = 4.0
 
-            return self.get_position_score(racer_entry.position) * final_mult
+            return self.get_position_score(racer_entry.position, len(race.racers) >= 10) * final_mult
 
     @staticmethod
     def __get_car_slug(car):
