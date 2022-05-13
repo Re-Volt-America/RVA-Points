@@ -45,13 +45,13 @@ def update_parser(button, text):
     wx.CallAfter(button.Disable)
     wx.CallAfter(text.SetLabelText, "Updating...")
 
-    if PLATFORM == "win64":
+    if sys.platform == "win32":
         executable = "rva_points.exe"
         url = f"{RVA_POINTS_URL}/win64/{executable}"
-    elif PLATFORM == "linux":
+    elif sys.platform == "linux":
         executable = "rva_points"
         url = f"{RVA_POINTS_URL}/linux/{executable}"
-    # elif PLATFORM == "macos": FIXME: This needs to be implemented, but im too lazy lol
+    # elif sys.platform == "darwin": FIXME: This needs to be implemented, but im too lazy lol
 
     # Cannot replace a running application on Windows
     # but renaming should work
@@ -73,7 +73,7 @@ def update_parser(button, text):
         wx.CallAfter(text.SetLabelText, "Pending restart.")
         wx.MessageBox("Parser has been updated.\nRestart to begin using the new version.", "Info", wx.OK | wx.ICON_INFORMATION)
 
-        if PLATFORM == 'win32':
+        if sys.platform == 'win32':
             wx.Exit()
             os.startfile(executable)
     else:

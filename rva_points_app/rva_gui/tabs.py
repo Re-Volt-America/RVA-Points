@@ -219,9 +219,9 @@ class CalculateTab(ScrolledTabPage):
         response = dialog.ShowModal()
 
         if response == wx.ID_OK:
-            if PLATFORM == "win32":
+            if sys.platform == "win32":
                 os.startfile(dialog.GetPath())
-            elif PLATFORM in ["linux", "macos"]:
+            elif sys.platform in ["linux", "darwin"]:
                 subprocess.call(["open", dialog.GetPath()])
 
     def on_open_sessions_button_click(self, e):
