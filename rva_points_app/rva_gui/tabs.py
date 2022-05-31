@@ -232,6 +232,9 @@ class CalculateTab(ScrolledTabPage):
         dialog = wx.FileDialog(self, msg, directory, file, wildcard)
         response = dialog.ShowModal()
 
+        if response != wx.ID_OK:
+            return
+
         if sys.platform == "win32":
             os.startfile(dialog.GetPath())
         elif sys.platform in ["linux", "darwin"]:
@@ -249,14 +252,16 @@ class CalculateTab(ScrolledTabPage):
         dialog = wx.FileDialog(self, msg, directory, file, wildcard)
         response = dialog.ShowModal()
 
-        if response == wx.ID_OK:
-            if sys.platform == "win32":
-                os.startfile(dialog.GetPath())
-            elif sys.platform in ["linux", "darwin"]:
-                error = subprocess.call(["open", dialog.GetPath()])
-                if error:
-                    wx.MessageBox(f"No application associated to {dialog.Filename}'s file type", "Info",
-                                  wx.OK | wx.ICON_INFORMATION)
+        if response != wx.ID_OK:
+            return
+
+        if sys.platform == "win32":
+            os.startfile(dialog.GetPath())
+        elif sys.platform in ["linux", "darwin"]:
+            error = subprocess.call(["open", dialog.GetPath()])
+            if error:
+                wx.MessageBox(f"No application associated to {dialog.Filename}'s file type", "Info",
+                              wx.OK | wx.ICON_INFORMATION)
 
     def set_class(self, car_class):
         if car_class is not None:
