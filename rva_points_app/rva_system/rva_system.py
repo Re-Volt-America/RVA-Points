@@ -4,10 +4,10 @@ import wx
 
 from rva_points_app.common import *
 from rva_points_app.logging import print_log
+from rva_points_app.exception import *
 
 
 class RVASystem:
-
     def __init__(self):
         """
         Maps the difference of car classes between session and racer to the correspondent bonus multiplier.  When a
@@ -64,7 +64,6 @@ class RVASystem:
         self.__load_cars()
 
     def __load_cars(self):
-        print_log(f"Loading cars...")
         for car_class in CAR_CLASSES:
             with open(os.path.join(os.getcwd(), "data", "%s.yaml" % car_class)) as fh:
                 read_data = yaml.load(fh, Loader=yaml.FullLoader)
@@ -125,12 +124,7 @@ class RVASystem:
 
         car_class = self.get_car_class(car_name)
         if car_class is None:
-            print_log(f"Car '{car_name}' was not found in the car files.")
-            print_log(f"The parsing process has been aborted. Please resolve the issues and try again.")
-
-            wx.MessageBox(f"Car '{car_name}' was not found in the car files.\nSee the Console for more details.", "Error", wx.OK | wx.ICON_ERROR)
-
-            raise CarNotFound(f"Car '{car_name}' was not found.")
+            raise CarNotFound(car_name)
 
         car_class_number = self.CLASS_NUMBERS_MAP[car_class]
 
@@ -162,7 +156,3 @@ class RVASystem:
     @staticmethod
     def __get_car_slug(car):
         return car.lower().replace(" ", "_")
-
-
-class CarNotFound(Exception):
-    pass

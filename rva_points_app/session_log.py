@@ -113,9 +113,7 @@ class Session:
             try:
                 racer_positions_line = [str(position), result_entry.name.split(" ")[1] if self.teams else result_entry.name]
             except IndexError:
-                print_log(f"Racer {result_entry.name} does not have a team.")
-                print_log(f"Unable to parse session. Either remove the player or add a team prefix.")
-                return
+                raise InvalidRacerTeam(result_entry.name)
 
             if self.teams:
                 racer_positions_line.append(result_entry.team)
@@ -182,11 +180,14 @@ class Session:
     def get_tracks(self):
         tracks = []
         for race in self.races:
-            track_short_name = self.__get_track_short_name(race.track)
-            if track_short_name == None:
-                tracks.append(str())
-            else:
-                tracks.append(track_short_name)
+            track_short_name = str()
+            try:
+                track_short_name = self.__get_track_short_name(race.track)
+            except TrackShortNameNotFound:
+                pass
+
+            tracks.append(track_short_name)
+
         return tracks
 
     def get_tracks_played_by(self, racer_name):
@@ -254,12 +255,10 @@ class Session:
             if actual_name in [track_key, f"{track_key} R", f"{track_key} M", f"{track_key} RM"]:
                 return self.TRACK_NAMES[track_key]
 
-        print_log(f"No short name found for track '{actual_name}'")
-        return str()
+        raise TrackShortNameNotFound(actual_name)
 
     @staticmethod
     def __load_track_names():
-        print_log(f"Loading track names...")
         with open(os.path.join(os.getcwd(), "data", "track_names.yaml")) as fh:
             return yaml.load(fh, Loader=yaml.FullLoader)
 
