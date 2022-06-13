@@ -300,19 +300,19 @@ class PreviewTab(ScrolledTabPage):
 
         self.GRID_BACKGROUND_RGB = wx.Colour(45, 63, 67)
         self.GRID_BORDER_RGB = wx.Colour(100, 100, 100)
-        self.GRID_CELL_HIGHLIGHT_RGB = wx.WHITE
+        self.GRID_CELL_HIGHLIGHT_RGB = wx.Colour(255, 253, 1)
 
-        self.GRID_COL_HEADER_RGB = wx.Colour(29, 40, 43)
-        self.GRID_COL_HEADER_TEXT_RGB = wx.Colour(255, 217, 102)
+        self.GRID_COL_HEADER_BACKGROUND_RGB = wx.Colour(29, 40, 43)
+        self.GRID_COL_HEADER_RGB = wx.Colour(255, 217, 102)
 
         self.GRID_COL_POS_RGB = wx.Colour(255, 217, 102)
-        self.GRID_COL_CONTENT_TXT_RGB = wx.Colour(144, 96, 0)
+        self.GRID_COL_CONTENT_RGB = wx.Colour(144, 96, 0)
 
-        self.GRID_RACER_NAME_TEXT_RGB = wx.Colour(189, 215, 238)
-        self.GRID_POSITION_NUMBER_TXT_RGB = wx.Colour(91, 173, 169)
-        self.GRID_FIRST_PLACE_TXT_RGB = wx.Colour(255, 215, 0)
-        self.GRID_SECOND_PLACE_TXT_RGB = wx.Colour(204, 204, 204)
-        self.GRID_THIRD_PLACE_TXT_RGB = wx.Colour(205, 127, 50)
+        self.GRID_RACER_NAME_RGB = wx.Colour(189, 215, 238)
+        self.GRID_POS_RGB = wx.Colour(91, 173, 169)
+        self.GRID_FIRST_PLACE_RGB = wx.Colour(255, 215, 0)
+        self.GRID_SECOND_PLACE_RGB = wx.Colour(204, 204, 204)
+        self.GRID_THIRD_PLACE_RGB = wx.Colour(205, 127, 50)
         self.GRID_INVALID_PLACE_RGB = wx.Colour(255, 50, 40)
 
         self.init_ui()
@@ -396,24 +396,40 @@ class PreviewTab(ScrolledTabPage):
             current_car = None
             for col in range(0, self.session_grid.GetNumberCols()):
                 if col == 0:
-                    self.session_grid.SetCellTextColour(row, col, self.GRID_COL_CONTENT_TXT_RGB)
+                    self.session_grid.SetCellTextColour(row, col, self.GRID_COL_CONTENT_RGB)
                     self.session_grid.SetCellBackgroundColour(row, col, self.GRID_COL_POS_RGB)
                     self.session_grid.SetCellFont(row, col, wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
                     self.session_grid.SetCellAlignment(row, col, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
                 elif col == 1:
-                    self.session_grid.SetCellTextColour(row, col, self.GRID_POSITION_NUMBER_TXT_RGB)
+                    self.session_grid.SetCellTextColour(row, col, self.GRID_POS_RGB)
                     self.session_grid.SetCellBackgroundColour(row, col, self.GRID_BACKGROUND_RGB)
                     self.session_grid.SetCellFont(row, col, wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
                     self.session_grid.SetCellAlignment(row, col, wx.ALIGN_LEFT, wx.ALIGN_LEFT)
                 else:
-                    self.session_grid.SetCellTextColour(row, col, self.GRID_POSITION_NUMBER_TXT_RGB)
+                    self.session_grid.SetCellTextColour(row, col, self.GRID_POS_RGB)
                     self.session_grid.SetCellBackgroundColour(row, col, self.GRID_BACKGROUND_RGB)
                     self.session_grid.SetCellFont(row, col, wx.Font(10, wx.SWISS, wx.ITALIC, wx.BOLD))
-                    if row % 2 == 0:
+
+                    if row % 2 == 0:  # Even rows are used for places
                         self.session_grid.SetCellAlignment(row, col, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
                         if self.session_grid.GetCellValue(row, col).startswith("'"):
                             self.session_grid.SetCellTextColour(row, col, self.GRID_INVALID_PLACE_RGB)
-                    else:
+                            continue
+
+                        if self.session_grid.GetColLabelValue(col) in ["PP", "PA", "CC", "MP", "PO"]:
+                            continue
+
+                        try:
+                            place = int(self.session_grid.GetCellValue(row, col))
+                            if place == 1:
+                                self.session_grid.SetCellTextColour(row, col, self.GRID_FIRST_PLACE_RGB)
+                            elif place == 2:
+                                self.session_grid.SetCellTextColour(row, col, self.GRID_SECOND_PLACE_RGB)
+                            elif place == 3:
+                                self.session_grid.SetCellTextColour(row, col, self.GRID_THIRD_PLACE_RGB)
+                        except ValueError:
+                            pass
+                    else:  # Odd rows are used for car names
                         if self.session_grid.GetCellValue(row, col) == " ":
                             reached_end_of_cars_row = True
 
@@ -472,8 +488,8 @@ class PreviewTab(ScrolledTabPage):
 
         self.session_grid.HideRowLabels()
         self.session_grid.HideColLabels()
-        self.session_grid.SetLabelBackgroundColour(self.GRID_COL_HEADER_RGB)
-        self.session_grid.SetLabelTextColour(self.GRID_COL_HEADER_TEXT_RGB)
+        self.session_grid.SetLabelBackgroundColour(self.GRID_COL_HEADER_BACKGROUND_RGB)
+        self.session_grid.SetLabelTextColour(self.GRID_COL_HEADER_RGB)
 
     def __update_grid_size(self, rows, cols):
         current_row_count = self.session_grid.GetNumberRows()
