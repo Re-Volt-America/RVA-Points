@@ -19,17 +19,18 @@ class FrameMain(wx.Frame):
 
     def on_size(self, e):
         self.Layout()
+
+        # When resizing the app's Window, the scrollbars at the Preview tab
+        # disappear, even if the grid is too big to be displayed. This
+        # makes it so the scrollbars are kept there if they are needed.
+        w, h = self.preview_tab.GetMinSize()
+        self.preview_tab.SetVirtualSize(w, h)
+        self.preview_tab.frame.SetSize(w, h)
+
         self.resized = True
 
     def on_idle(self, e):
         if self.resized:
-            # When resizing the app's Window, the scrollbars at the Preview tab
-            # disappear, even if the grid is too big to be displayed. This
-            # makes it so the scrollbars are kept there if they are needed.
-            w, h = self.preview_tab.GetMinSize()
-            self.preview_tab.SetVirtualSize(w, h)
-            self.preview_tab.frame.SetSize(w, h)
-
             self.resized = False
 
     def init_ui(self):
