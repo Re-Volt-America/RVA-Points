@@ -102,11 +102,9 @@ class FrameMain(wx.Frame):
         response = dialog.ShowModal()
 
         if response == wx.ID_OK:
-            log_file = dialog.GetPath()
+            print_log(f"Importing Session Log '{dialog.GetPath()}'...")
 
-            print_log(f"Importing Session Log '{log_file}'...")
-
-            self.calculate_tab.session = SessionLog(log_file, teams=self.calculate_tab.is_parsing_teams()).get_session()
+            self.calculate_tab.session = SessionLog(dialog.GetPath(), teams=self.calculate_tab.is_parsing_teams()).get_session()
             self.calculate_tab.session_file_name = dialog.GetFilename()
             self.calculate_tab.session_file_path = dialog.GetPath()
             self.calculate_tab.session.rva_system.set_category_class_number(self.calculate_tab.get_selected_class_number())
@@ -133,7 +131,7 @@ class FrameMain(wx.Frame):
         response = dialog.ShowModal()
 
         if response == wx.ID_OK:
-            print_log(f"Exporting Session Log to '{file}'...")
+            print_log(f"Exporting Session Log to '{dialog.GetPath()}'...")
 
             with open(os.path.join(dialog.GetDirectory(), file), "w+", newline='') as csv_file:
                 writer = csv.writer(csv_file, delimiter=",")

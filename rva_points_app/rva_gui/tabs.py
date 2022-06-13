@@ -350,8 +350,6 @@ class PreviewTab(ScrolledTabPage):
         self.__fill_preview_content()
         self.__style_preview_content()
 
-        print_log(f"Updated results preview.")
-
     def __fill_and_style_preview_col_headers(self):
         head_col = 0
         for row in self.rva_results[:1]:
