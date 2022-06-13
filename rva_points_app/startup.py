@@ -11,42 +11,26 @@ def prepare_folders():
 
     create_folder(os.path.join(CONFIG_DIR, "data/version"))
 
-
-def prepare_data():
-    fetch_data(update=False)
-
-
-" Fetches all data files. In case of an update, it replaces everything "
-def fetch_data(update=False):
+""" Retrieves all the RVA Data files and creates them if they don't exist """
+def fetch_data():
     for car_class in CAR_CLASSES:
         file = f"data/{car_class}.yaml"
-        if update:
+        if not os.path.isfile(file):
             r = requests.get(f"{RVA_DATA_URL}/yaml/{car_class}.yaml")
             create_file(f"data/{car_class}.yaml", r.text)
-        else:
-            if not os.path.isfile(file):
-                r = requests.get(f"{RVA_DATA_URL}/yaml/{car_class}.yaml")
-                create_file(f"data/{car_class}.yaml", r.text)
 
     tracks_file = "data/track_names.yaml"
-    if update:
+    if not os.path.isfile(tracks_file):
         r = requests.get(f"{RVA_DATA_URL}/yaml/track_names.yaml")
         create_file(tracks_file, r.text)
-    else:
-        if not os.path.isfile(tracks_file):
-            r = requests.get(f"{RVA_DATA_URL}/yaml/track_names.yaml")
-            create_file(tracks_file, r.text)
 
     data_version_file = "data/version/rva_data.json"
-    if update:
+    if not os.path.isfile(tracks_file):
         r = requests.get(f"{RVA_DATA_URL}/rva_data.json")
         create_file(data_version_file, r.text)
-    else:
-        if not os.path.isfile(tracks_file):
-            r = requests.get(f"{RVA_DATA_URL}/rva_data.json")
-            create_file(data_version_file, r.text)
 
-""" Retrieves the data version number from its version folder. If not found, a new data version file is downloaded. """
+
+""" Retrieves the data version string from its version folder. If not found, a new data version file is downloaded. """
 def get_data_version():
     data_version_file_path = os.path.join(os.getcwd(), "data/version/rva_data.json")
     if not os.path.isfile(data_version_file_path):

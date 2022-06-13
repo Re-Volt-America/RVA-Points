@@ -153,7 +153,7 @@ def main():
 
     prepare_config()
     prepare_folders()
-    prepare_data()
+    fetch_data()
 
     common.log_file = LogFile()
 
