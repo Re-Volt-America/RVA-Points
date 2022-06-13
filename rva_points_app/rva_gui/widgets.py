@@ -149,10 +149,13 @@ class ScrolledTabPage(scrolled.ScrolledPanel):
         self.parent = parent
         self.frame = parent.parent
 
+        self.Bind(wx.EVT_SIZE, self.on_size)
+
     def Layout(self):
         if self.frame.GetSizer():
             scrolled.ScrolledPanel.Layout(self)
             self.SetupScrolling(scroll_x=False)
+
 
 
 class FileDropEvent(wx.PyCommandEvent):

@@ -10,7 +10,27 @@ from rva_points_app.startup import prepare_folders
 class FrameMain(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(FrameMain, self).__init__(*args, **kwargs)
+        self.resized = False
+
         self.init_ui()
+
+        self.Bind(wx.EVT_SIZE, self.on_size)
+        self.Bind(wx.EVT_IDLE, self.on_idle)
+
+    def on_size(self, e):
+        self.Layout()
+        self.resized = True
+
+    def on_idle(self, e):
+        if self.resized:
+            # When resizing the app's Window, the scrollbars at the Preview tab
+            # disappear, even if the grid is too big to be displayed. This
+            # makes it so the scrollbars are kept there if they are needed.
+            w, h = self.preview_tab.GetMinSize()
+            self.preview_tab.SetVirtualSize(w, h)
+            self.preview_tab.frame.SetSize(w, h)
+
+            self.resized = False
 
     def init_ui(self):
         self.SetTitle(APP_TITLE_WITH_VER)
