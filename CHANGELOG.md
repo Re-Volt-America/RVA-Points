@@ -1,3 +1,19 @@
+0.0.2.1.dev2
+===
+Added:
+- INFO message box for tracks missing a short name.
+- ERROR message box for racers with no team parsed on teams results.
+- 1st, 2nd and 3rd places are now colour highlighted at the Preview tab(gold, silver and bronze respectively).
+
+Changed:
+- Cleaned up some Console logs.
+- Scrollbars are now seamlessly restored when resizing the app's window.
+- Refactored internal colour constants.
+- Changed cell highlight colour to yellow at the Preview tab.
+
+Fixed:
+- Fixed scrollbars disappearing at Preview tab.
+
 0.0.2.0
 ===
 Added:
