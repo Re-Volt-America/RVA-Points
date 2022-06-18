@@ -119,6 +119,12 @@ class Session:
         cars = []
         last_car_used = None
         for race in self.races:
+            # The category is Random, therefore we ignore cars for results
+            if self.rva_system.category_class_number == 6:
+                cars.append(str())
+                continue
+
+            # Player didn't play this race, so we ignore
             if racer not in race.get_racer_names():
                 cars.append(str())
                 continue
