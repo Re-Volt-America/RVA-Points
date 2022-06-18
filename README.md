@@ -19,7 +19,6 @@
 
 ## Preview Images
 
-
 <div align="left">
   <h3>Calculate Tab</h3>
   <img src="https://user-images.githubusercontent.com/26081543/174425594-dfc53e6a-6fe3-44d6-9b83-c0f0211866ec.PNG" alt=""/>
