@@ -21,9 +21,9 @@
 
 <div align="left">
   <h3>Calculate Tab</h3>
-  <img src="https://user-images.githubusercontent.com/26081543/174425594-dfc53e6a-6fe3-44d6-9b83-c0f0211866ec.PNG" alt=""/>
-  <h3>Preview Tab</h3>
   <img src="https://user-images.githubusercontent.com/26081543/174425589-36f85da4-557c-4e13-bcaa-a915f5f87115.PNG" alt=""/>
+  <h3>Preview Tab</h3>
+  <img src="https://user-images.githubusercontent.com/26081543/174425594-dfc53e6a-6fe3-44d6-9b83-c0f0211866ec.PNG" alt=""/>
   <h3>Console Tab</h3>
   <img src="https://user-images.githubusercontent.com/26081543/174425595-e8c852e6-b0e9-4141-8e51-52a79c52881c.PNG" alt=""/>
 </div>
