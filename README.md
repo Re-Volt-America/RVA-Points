@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">RVA-Points</h1>
-<h4 align="center">A program to parse <a href="https://rvgl.re-volt.io/" target="_blank">RVGL</a> session logs and export them as Re-Volt America results</h4>
+<h4 align="center">Desktop application to parse <a href="https://rvgl.re-volt.io/" target="_blank">RVGL</a> session logs and export them as Re-Volt America results</h4>
 
 <p align="center">
   <a href="https://github.com/Re-Volt-America/RVA-Points/actions/workflows/deploy.yml" class="rich-diff-level-one"><img src="https://github.com/Re-Volt-America/RVA-Points/actions/workflows/deploy.yml/badge.svg?branch=production" alt="deploy" style="max-width:100%;"></a>
@@ -18,11 +18,15 @@
      * MacOS: Decompress & use the application by double clicking rva_points.
 
 ## Preview Images
+
+
 <div align="left">
   <h3>Calculate Tab</h3>
-  <img src="https://user-images.githubusercontent.com/26081543/156964493-974875a8-057f-4a7e-9611-d7b08f7520da.PNG" alt=""/>
+  <img src="https://user-images.githubusercontent.com/26081543/174425594-dfc53e6a-6fe3-44d6-9b83-c0f0211866ec.PNG" alt=""/>
   <h3>Preview Tab</h3>
-  <img src="https://user-images.githubusercontent.com/26081543/156964394-2d2588f8-4e86-4b23-98ab-94c3532a049d.PNG" alt=""/>
+  <img src="https://user-images.githubusercontent.com/26081543/174425589-36f85da4-557c-4e13-bcaa-a915f5f87115.PNG" alt=""/>
+  <h3>Console Tab</h3>
+  <img src="https://user-images.githubusercontent.com/26081543/174425595-e8c852e6-b0e9-4141-8e51-52a79c52881c.PNG" alt=""/>
 </div>
 
 ### Running
