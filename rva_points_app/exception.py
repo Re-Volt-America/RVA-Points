@@ -24,8 +24,13 @@ class TrackShortNameNotFound(Exception):
 class InvalidRacerTeam(Exception):
     def __init__(self, racer_name):
         print_log(f"Racer {racer_name} does not have a team.")
-        print_log(f"Unable to parse session. Either remove the player or add a team prefix.")
+        print_log(f"Unable to parse session. Either remove the player or add a team tag.")
 
         wx.MessageBox(f"Racer '{racer_name}' does not have a team!\n"
                       f"See the Console for more details.", "Error",
                       wx.OK | wx.ICON_ERROR)
+
+
+class NoSessionLog(Exception):
+    def __init__(self):
+        wx.MessageBox("You must import a session log before exporting!", "Info", wx.OK | wx.ICON_INFORMATION)

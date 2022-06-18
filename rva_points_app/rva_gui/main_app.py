@@ -2,6 +2,7 @@ import csv
 import webbrowser
 
 from rva_points_app.config import prepare_config, save_config
+from rva_points_app.exception import NoSessionLog
 from rva_points_app.rva_gui.tabs import *
 from rva_points_app.common import *
 from rva_points_app.startup import prepare_folders
@@ -119,8 +120,7 @@ class FrameMain(wx.Frame):
     def on_export_session_log(self, e):
         session = self.calculate_tab.session
         if session is None:
-            wx.MessageBox("You must import a session log before exporting!", "Info", wx.OK | wx.ICON_INFORMATION)
-            return
+            raise NoSessionLog
 
         msg = "Save file as..."
         directory = os.path.join(os.getcwd(), "results")
@@ -135,7 +135,10 @@ class FrameMain(wx.Frame):
 
             with open(os.path.join(dialog.GetDirectory(), file), "w+", newline='') as csv_file:
                 writer = csv.writer(csv_file, delimiter=",")
-                writer.writerows(self.calculate_tab.session.get_rva_results())
+                if self.calculate_tab.session.teams:
+                    writer.writerows(self.calculate_tab.session.get_rva_teams_results_arr())
+                else:
+                    writer.writerows(self.calculate_tab.session.get_rva_singles_results_arr())
                 csv_file.close()
 
         dialog.Destroy()

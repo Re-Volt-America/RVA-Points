@@ -97,75 +97,99 @@ class Session:
 
         return racer_result_entries
 
-    def get_rva_results(self):
-        rva_results = []
-        header = ["Pos", "Racer"]
-        if self.teams:
-            header = header + ["Team"] + self.get_tracks() + ["CC", "PA"]
-        else:
-            header = header + self.get_tracks() + ["PP", "PA", "CC", "MP", "PO"]
+    def resolve_racer_positions_line(self, racer):
+        positions = []
+        for race in self.races:
+            if racer not in race.get_racer_names():
+                positions.append(str())
+                continue
 
-        rva_results.append(header)
+            car_bonus = self.rva_system.get_car_bonus(race.get_racer_car(racer))
 
-        position = 1
+            # Car was invalid for whatever reason, so we prepend "'" to the position
+            if car_bonus is None:
+                positions.append(f"'{str(race.get_racer_position(racer))}'")
+                continue
+
+            positions.append(str(race.get_racer_position(racer)))
+
+        return positions
+
+    def resolve_racer_cars_line(self, racer):
+        cars = []
+        last_car_used = None
+        for race in self.races:
+            if racer not in race.get_racer_names():
+                cars.append(str())
+                continue
+
+            car_used = race.get_racer_car(racer)
+
+            # Player hasn't changed cars, so we skip
+            if car_used == last_car_used:
+                cars.append(str())
+                continue
+
+            # Trim 'Clockwork' from the car's name and leave the rest, except if it's just 'Clockwork'
+            if not car_used == "Clockwork" and car_used.startswith("Clockwork"):
+                car_used = car_used.split(" ", 1)[1]
+
+            cars.append(car_used)
+            last_car_used = car_used
+
+        # We append a blank space at the end of the line
+        cars.append(" ")
+        return cars
+
+    def get_rva_singles_results_arr(self):
+        rva_results = [["Pos", "Racer"] + self.get_track_short_names_arr() + ["PP", "PA", "CC", "MP", "PO"]]
+
+        pos = 1
         racer_result_entries = self.get_racer_result_entries()
         for result_entry in racer_result_entries:
-            try:
-                racer_positions_line = [str(position), result_entry.name.split(" ")[1] if self.teams else result_entry.name]
-            except IndexError:
-                raise InvalidRacerTeam(result_entry.name)
-
-            if self.teams:
-                racer_positions_line.append(result_entry.team)
-
-            for race in self.races:
-                if result_entry.name in race.get_racer_names():
-                    car_bonus = self.rva_system.get_car_bonus(race.get_racer_car(result_entry.name))
-                    racer_position = ""
-                    if car_bonus is None:
-                        racer_position = racer_position + "'"
-
-                    racer_position = racer_position + str(race.get_racer_position(result_entry.name))
-                    racer_positions_line.append(racer_position)
-                else:
-                    racer_positions_line.append(str())
-
-            if self.teams:
-                racer_positions_line.append(result_entry.race_count)
-                racer_positions_line.append(str(result_entry.obtained_points).replace(".", CONFIG["decimal_number_separator"]))
-            else:
-                racer_positions_line.append(str(result_entry.average_position).replace(".", CONFIG["decimal_number_separator"]))
-                racer_positions_line.append(str(result_entry.obtained_points).replace(".", CONFIG["decimal_number_separator"]))
-                racer_positions_line.append(result_entry.race_count)
-                racer_positions_line.append(str(result_entry.participation_multiplier).replace(".", CONFIG["decimal_number_separator"]))
-                racer_positions_line.append(str(result_entry.official_score).replace(".", CONFIG["decimal_number_separator"]))
-
-            rva_results.append(racer_positions_line)
-            position = position + 1
+            racer_name = result_entry.name
+            racer_positions_line = [str(pos), racer_name]
+            racer_positions_line += self.resolve_racer_positions_line(racer_name)
+            racer_positions_line.append(str(result_entry.average_position).replace(".", CONFIG["decimal_number_separator"]))
+            racer_positions_line.append(str(result_entry.obtained_points).replace(".", CONFIG["decimal_number_separator"]))
+            racer_positions_line.append(result_entry.race_count)
+            racer_positions_line.append(str(result_entry.participation_multiplier).replace(".", CONFIG["decimal_number_separator"]))
+            racer_positions_line.append(str(result_entry.official_score).replace(".", CONFIG["decimal_number_separator"]))
 
             racer_cars_line = [str(), str()]
-            if self.teams:
-                racer_cars_line.append(str())
+            racer_cars_line += self.resolve_racer_cars_line(racer_name)
 
-            last_car_used = None
-            for race in self.races:
-                if result_entry.name in race.get_racer_names():
-                    car_used = race.get_racer_car(result_entry.name)
-                    if car_used == last_car_used:
-                        racer_cars_line.append(str())
-                    else:
-                        car = race.get_racer_car(result_entry.name)
-                        # Remove 'Clockwork' from the car's name and leave the rest, except if it's just 'Clockwork'
-                        if not car == "Clockwork" and car.startswith("Clockwork"):
-                            car = car.split(" ", 1)[1]
-
-                        racer_cars_line.append(car)
-                    last_car_used = car_used
-                else:
-                    racer_cars_line.append(str())
-            racer_cars_line.append(" ")
-
+            rva_results.append(racer_positions_line)
             rva_results.append(racer_cars_line)
+
+            pos += 1
+
+        return rva_results
+
+    def get_rva_teams_results_arr(self):
+        rva_results = [["Pos", "Racer", "Team"] + self.get_track_short_names_arr() + ["CC", "PA"]]
+
+        pos = 1
+        for result_entry in self.get_racer_result_entries():
+            racer_name = result_entry.name
+
+            try:
+                racer_positions_line = [str(pos), racer_name.split(" ", 1)[1], result_entry.team]
+            except IndexError:
+                raise InvalidRacerTeam(racer_name)
+
+            racer_positions_line += self.resolve_racer_positions_line(racer_name)
+            racer_positions_line.append(result_entry.race_count)
+            racer_positions_line.append(str(result_entry.obtained_points).replace(".", CONFIG["decimal_number_separator"]))
+
+            racer_cars_line = [str(), str(), str()]
+            racer_cars_line += self.resolve_racer_cars_line(racer_name)
+
+            rva_results.append(racer_positions_line)
+            rva_results.append(racer_cars_line)
+
+            pos += 1
+
         return rva_results
 
     def get_racer_entries_of(self, racer_name):
@@ -177,7 +201,7 @@ class Session:
 
         return entries
 
-    def get_tracks(self):
+    def get_track_short_names_arr(self):
         tracks = []
         for race in self.races:
             track_short_name = str()
@@ -322,7 +346,7 @@ class SessionLog:
                        self.SESSION_INFO[1][3],  # Physics (Simulation, Arcade, Console or Junior RC)
                        races,  # List containing all races played in this session
                        rva_system,  # An RVA system instance, in order to calculate stuff for us
-                       self.teams
+                       self.teams  # Whether this was an RVA teams session or not
                        )
 
     def __get_races(self):

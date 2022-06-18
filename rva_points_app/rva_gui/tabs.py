@@ -339,7 +339,10 @@ class PreviewTab(ScrolledTabPage):
         self.box_preview.Add(self.box_preview_header, 1, wx.EXPAND | wx.ALL, 10)
 
     def update_preview(self, session):
-        self.rva_results = session.get_rva_results()
+        if session.teams:
+            self.rva_results = session.get_rva_teams_results_arr()
+        else:
+            self.rva_results = session.get_rva_singles_results_arr()
 
         rows = len(self.rva_results) - 1
         cols = len(self.rva_results[0])
