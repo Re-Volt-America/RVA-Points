@@ -1,3 +1,8 @@
+0.0.2.1.dev3
+===
+Changed:
+- Car names are now ignored for results in the Randoms class.
+
 0.0.2.1.dev2
 ===
 Added:
