@@ -136,11 +136,13 @@ class Session:
                 cars.append(str())
                 continue
 
-            # Trim 'Clockwork' from the car's name and leave the rest, except if it's just 'Clockwork'
+            # If the car is a clockwork trim 'Clockwork' from its name and leave the rest,
+            # except if it's just 'Clockwork'. This only has aesthetic purposes.
             if not car_used == "Clockwork" and car_used.startswith("Clockwork"):
-                car_used = car_used.split(" ", 1)[1]
+                cars.append(car_used.split(" ", 1)[1])
+            else:
+                cars.append(car_used)
 
-            cars.append(car_used)
             last_car_used = car_used
 
         # We append a blank space at the end of the line
