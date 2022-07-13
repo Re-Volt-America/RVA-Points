@@ -1,6 +1,7 @@
 import requests
 import wx
 
+from packaging import version
 from rva_points_app.startup import *
 from rva_points_app.version import __version__
 
@@ -13,14 +14,15 @@ def parser_update_available(button, text):
         wx.CallAfter(text.SetLabelText, f"Unable to retrieve update info.")
         return
 
-    version = r.json()["version"]
-    if version == __version__:
+    v = r.json()["version"]
+    if version.parse(v) > version.parse(__version__):
+        wx.CallAfter(button.Enable)
+        wx.CallAfter(text.SetLabelText, f"Parser v{v} is available!")
+        print_log(f"New Parser version detected: {v}")
+    else:
         wx.CallAfter(text.SetLabelText, f"Parser is up to date.")
         wx.CallAfter(button.Disable)
-    else:
-        wx.CallAfter(button.Enable)
-        wx.CallAfter(text.SetLabelText, f"Parser v{version} is available!")
-        print_log(f"New Parser version detected: {version}")
+        print_log(f"Parser is up to date.")
 
 
 def data_update_available(button, text):
@@ -31,14 +33,15 @@ def data_update_available(button, text):
         wx.CallAfter(text.SetLabelText, "Unable to retrieve update info.")
         return
 
-    version = r.json()["version"]
-    if version == get_data_version():
-        wx.CallAfter(text.SetLabelText, f"RVA Data is up to date.")
-        wx.CallAfter(button.Disable)
-    else:
+    v = r.json()["version"]
+    if version.parse(v) > version.parse(get_data_version()):
         wx.CallAfter(button.Enable)
         wx.CallAfter(text.SetLabelText, f"Data v{version} is available!")
         print_log(f"New RVA Data version detected: {version}")
+    else:
+        wx.CallAfter(text.SetLabelText, f"RVA Data is up to date.")
+        wx.CallAfter(button.Disable)
+        print_log(f"RVA Data is up to date.")
 
 
 def update_parser(button, text):
