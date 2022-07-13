@@ -108,7 +108,7 @@ class Session:
 
             # Car was invalid for whatever reason, so we prepend "'" to the position
             if car_bonus is None:
-                positions.append(f"'{str(race.get_racer_position(racer))}'")
+                positions.append(f"'{str(race.get_racer_position(racer))}")
                 continue
 
             positions.append(str(race.get_racer_position(racer)))
