@@ -1,5 +1,3 @@
-from math import inf
-
 import yaml
 import os
 import wx
