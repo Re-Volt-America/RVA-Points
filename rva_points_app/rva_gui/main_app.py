@@ -115,7 +115,6 @@ class FrameMain(wx.Frame):
             self.calculate_tab.allow_mystery_checkbox.Enable()
 
         dialog.Destroy()
-        self.calculate_tab.update_preview()
 
     def on_export_session_log(self, e):
         session = self.calculate_tab.session

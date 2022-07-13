@@ -1,3 +1,5 @@
+from math import inf
+
 import yaml
 import os
 import wx
@@ -31,6 +33,12 @@ class RVASystem:
             "pro": 4,
             "super-pro": 5,
             "random": None
+        }
+        self.POSITION_SUFFIXES = {
+            1: "st",
+            2: "nd",
+            3: "rd",
+            **dict.fromkeys(list(range(4, 17)), "th")
         }
         self.NORMALIZER_CONSTANT = 0.1
         self.CARS_INFO = {}
@@ -145,13 +153,24 @@ class RVASystem:
         car_bonus = self.get_car_bonus(racer_entry.car)
 
         if car_bonus is None:
+            print_log(f"[{race.track}] {racer_entry.position}{self.POSITION_SUFFIXES[racer_entry.position]}, "
+                      f"{racer_entry.car}, "
+                      f"Multiplier: Invalid, "
+                      f"Score: {0.0}")
             return 0.0  # Car is above the current category's class, therefore points are invalidated
         else:
-            final_mult = self.get_car_multiplier(racer_entry.car) * car_bonus
+            final_mult = round(self.get_car_multiplier(racer_entry.car) * car_bonus, 3)
             if final_mult > 4.0:
                 final_mult = 4.0
+            big_race = len(race.racers) >= 10  # If the race had 10+ people (inclusive) we use the big scoring system.
+            racer_score = round(self.get_position_score(racer_entry.position, big_scoring=big_race) * final_mult, 3)
 
-            return self.get_position_score(racer_entry.position, len(race.racers) >= 10) * final_mult
+            print_log(f"[{race.track}] {racer_entry.position}{self.POSITION_SUFFIXES[racer_entry.position]}, "
+                      f"{racer_entry.car}, "
+                      f"Multiplier: {final_mult}, "
+                      f"Score: {racer_score}")
+
+            return racer_score
 
     @staticmethod
     def __get_car_slug(car):

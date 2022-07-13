@@ -78,14 +78,19 @@ class Session:
     def get_racer_result_entries(self):
         racer_result_entries = []
         for racer_name in self.get_racers():
+            avg_pos = self.get_average_position_of(racer_name)
+            obtained_points = self.get_obtained_points(racer_name)
+            participation_mult = self.get_participation_multiplier(racer_name)
+            official_score = self.get_official_score(obtained_points, avg_pos, participation_mult)
+
             racer_result_entries.append(
                 RacerResultEntry(racer_name,
                                  self.get_race_count_of(racer_name),
-                                 self.get_average_position_of(racer_name),
-                                 self.get_obtained_points(racer_name),
-                                 self.get_official_score_of(racer_name),
+                                 avg_pos,
+                                 obtained_points,
+                                 official_score,
                                  self.get_tracks_played_by(racer_name),
-                                 self.get_participation_multiplier(racer_name),
+                                 participation_mult,
                                  self.get_team_of(racer_name)
                                  )
             )
@@ -264,18 +269,26 @@ class Session:
     def get_obtained_points(self, racer_name):
         obtained_points = 0
 
+        print_log(f"################################"
+                  f"######### {racer_name} #########"
+                  f"################################")
         for race in self.races:
             for racer_entry in race.racers:
                 if racer_entry.name == racer_name:
                     obtained_points = obtained_points + self.rva_system.get_racer_score(racer_entry, race)
-
         return round(obtained_points, 0)
 
-    def get_official_score_of(self, racer_name):
-        official_score = self.get_obtained_points(racer_name) / self.get_average_position_of(racer_name)
-        official_score = official_score * self.get_participation_multiplier(racer_name)
+    def get_official_score(self, obtained_points, avg_pos, participation_mult):
+        official_score = obtained_points / avg_pos
+        official_score = official_score * participation_mult
         official_score = official_score * self.rva_system.NORMALIZER_CONSTANT
-        return round(official_score, 2)
+        official_score = round(official_score, 2)
+
+        print_log(f"[PP] Average Position: {avg_pos}")
+        print_log(f"[MP] Participation Mult.: {participation_mult}")
+        print_log(f"[PA] Obtained Points: {obtained_points}")
+        print_log(f"[PO] Official Score: {official_score}")
+        return official_score
 
     def get_race_count_of(self, racer_name):
         races_played = self.get_tracks_played_by(racer_name)
