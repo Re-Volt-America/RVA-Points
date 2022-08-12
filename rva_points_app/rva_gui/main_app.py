@@ -147,7 +147,7 @@ class FrameMain(wx.Frame):
         e.Skip()
 
     def on_report_a_bug(self, e):
-        webbrowser.open(CONFIG["git_issues_url"])
+        webbrowser.open("https://github.com/Re-Volt-America/RVA-Points/issues")
 
     def on_show_console(self, e):
         CONFIG["show-console"] = self.menu_help_console.IsChecked()

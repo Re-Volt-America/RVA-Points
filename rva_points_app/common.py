@@ -33,8 +33,6 @@ CONFIG = {
     "default_category": 0,
     "app_min_window_size": (1000, 480),
     "app_launch_window_size": (1000, 600),
-    "git_url": "https://github.com/Re-Volt-America/RVA-Points",
-    "git_issues_url": "https://github.com/Re-Volt-America/RVA-Points/issues",
     "show-console": False,
     "teams": False
 }
