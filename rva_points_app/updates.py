@@ -36,8 +36,8 @@ def data_update_available(button, text):
     v = r.json()["version"]
     if version.parse(v) > version.parse(get_data_version()):
         wx.CallAfter(button.Enable)
-        wx.CallAfter(text.SetLabelText, f"Data v{version} is available!")
-        print_log(f"New RVA Data version detected: {version}")
+        wx.CallAfter(text.SetLabelText, f"Data v{v} is available!")
+        print_log(f"New RVA Data version detected: {v}")
     else:
         wx.CallAfter(text.SetLabelText, f"RVA Data is up to date.")
         wx.CallAfter(button.Disable)
