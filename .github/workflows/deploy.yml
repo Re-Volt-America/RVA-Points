@@ -86,46 +86,46 @@ jobs:
           local-dir: "./dist/win64/"
           server-dir: "rva_points/win64/"
   macos:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-        with:
-          python-version: "3.8"
-      - name: Install dependencies
-        run: |
-         python -m pip install –upgrade wheel
-         python -m pip install --upgrade pip setuptools wheel
-         python -m pip install attrdict3
-         python -m pip install PyInstaller
-         python -m pip install PyYAML
-         python -m pip install requests
-         python -m pip install packaging
-         python -m pip install appdirs
-         python -m pip install wxPython
-      - name: Compile using pyinstaller
-        run: |
-         pyinstaller rva_points.py -w --onefile --windowed --workpath dist/macos/build --distpath ./dist/macos --icon icons/icon.ico
-         mv ./dist/macos/rva_points.app .
-      - name: Prepare release
-        uses: papeloto/action-zip@v1
-        with:
-          files: rva_points.app icons
-          dest: rva_points_macos.zip
-          recursive: false
-      - name: Prepare FTP directories
-        run: |
-          rm -r ./dist/macos/build
-          mv rva_points_macos.zip ./dist/macos
-#         mv rva_points.app ./dist/macos   FIXME: Ignore standalone app until automatic updates for macos are resolved.
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: "./dist/macos/"
-          server-dir: "rva_points/macos/"
+    if: ${{ false }}
+      runs-on: macos-10.15
+      steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-python@v3
+          with:
+            python-version: "3.8"
+        - name: Install dependencies
+          run: |
+           python -m pip install --upgrade pip setuptools wheel
+           python -m pip install attrdict3
+           python -m pip install PyInstaller
+           python -m pip install PyYAML
+           python -m pip install requests
+           python -m pip install packaging
+           python -m pip install appdirs
+           python -m pip install wxPython
+        - name: Compile using pyinstaller
+          run: |
+           pyinstaller rva_points.py -w --onefile --windowed --workpath dist/macos/build --distpath ./dist/macos --icon icons/icon.ico
+           mv ./dist/macos/rva_points.app .
+        - name: Prepare release
+          uses: papeloto/action-zip@v1
+          with:
+            files: rva_points.app icons
+            dest: rva_points_macos.zip
+            recursive: false
+        - name: Prepare FTP directories
+          run: |
+            rm -r ./dist/macos/build
+            mv rva_points_macos.zip ./dist/macos
+  #         mv rva_points.app ./dist/macos   FIXME: Ignore standalone app until automatic updates for macos are resolved.
+        - name: Deploy via FTP
+          uses: SamKirkland/FTP-Deploy-Action@4.3.0
+          with:
+            server: ${{ secrets.FTP_SERVER }}
+            username: ${{ secrets.FTP_USERNAME }}
+            password: ${{ secrets.FTP_PASSWORD }}
+            local-dir: "./dist/macos/"
+            server-dir: "rva_points/macos/"
   version:
     needs: [linux, win64, macos]
     runs-on: ubuntu-18.04
