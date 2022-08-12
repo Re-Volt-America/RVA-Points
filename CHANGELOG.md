@@ -1,18 +1,21 @@
 0.0.2.5.dev1
 ===
+Added:
+- All information related to the calculation of results is now logged.
+
 Changed:
 - Import and Export buttons will now remember the directory
 where they opened the last file and resume within it. The same behaviour now applies to Quick Access' Sessions
 and Results buttons.
 - Git links are no longer stored config.json.
+- Removed extra quote for invalid cars' scores.
+- Car names are now ignored for results in the Randoms class.
 
 Fixed:
 - Fixed RVA-Data updates not displaying readable new versions.
-
-0.0.2.1.dev4
-===
-Changed:
-- Car names are now ignored for results in the Randoms class.
+- Fixed versions being compared as strings rather than proper version types.
+- Fixed SCORING and BIG_SCORING contents being swapped.
+- Fixed Clockworks being repeated at final results
 
 0.0.2.1.dev2
 ===
