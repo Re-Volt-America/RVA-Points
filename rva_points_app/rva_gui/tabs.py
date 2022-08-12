@@ -225,8 +225,11 @@ class CalculateTab(ScrolledTabPage):
                 subprocess.call(["open", dialog.GetPath()])
 
     def on_open_sessions_button_click(self, e):
+        if CONFIG["sessions_dir"] == "":
+            CONFIG["sessions_dir"] = os.path.join(os.getcwd(), "sessions")
+
         msg = ""
-        directory = os.path.join(os.getcwd(), "sessions")
+        directory = CONFIG["sessions_dir"]
         file = ""
         wildcard = ""
         dialog = wx.FileDialog(self, msg, directory, file, wildcard)
@@ -244,9 +247,17 @@ class CalculateTab(ScrolledTabPage):
                 wx.MessageBox(f"No application associated to {dialog.Filename}'s file type", "Info",
                               wx.OK | wx.ICON_INFORMATION)
 
+        dialog.Destroy()
+
+        # Remember where we chose the last file to later resume there
+        CONFIG["sessions_dir"] = os.path.dirname(dialog.GetPath())
+
     def on_open_results_button_click(self, e):
+        if CONFIG["results_dir"] == "":
+            CONFIG["results_dir"] = os.path.join(os.getcwd(), "results")
+
         msg = ""
-        directory = os.path.join(os.getcwd(), "results")
+        directory = CONFIG["results_dir"]
         file = ""
         wildcard = ""
         dialog = wx.FileDialog(self, msg, directory, file, wildcard)
@@ -262,6 +273,11 @@ class CalculateTab(ScrolledTabPage):
             if error:
                 wx.MessageBox(f"No application associated to {dialog.Filename}'s file type", "Info",
                               wx.OK | wx.ICON_INFORMATION)
+
+        dialog.Destroy()
+
+        # Remember where we chose the last file to later resume there
+        CONFIG["results_dir"] = os.path.dirname(dialog.GetPath())
 
     def set_class(self, car_class):
         if car_class is not None:

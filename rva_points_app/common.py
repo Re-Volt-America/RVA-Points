@@ -34,7 +34,11 @@ CONFIG = {
     "app_min_window_size": (1000, 480),
     "app_launch_window_size": (1000, 600),
     "show-console": False,
-    "teams": False
+    "teams": False,
+    "import_dir": "",
+    "export_dir": "",
+    "sessions_dir": "",
+    "results_dir": ""
 }
 
 """ Returns the application base folder """

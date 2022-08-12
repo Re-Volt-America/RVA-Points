@@ -95,8 +95,11 @@ class FrameMain(wx.Frame):
         self.SetMenuBar(self.menu_bar)
 
     def on_import_session_log(self, e):
+        if CONFIG["import_dir"] == "":
+            CONFIG["import_dir"] = os.path.join(os.getcwd(), "sessions")
+
         msg = "Select Session Log"
-        directory = os.path.join(os.getcwd(), "sessions")
+        directory = CONFIG["import_dir"]
         file = ""
         wildcard = "Session Log (*.csv)|*.csv"
         dialog = wx.FileDialog(self, msg, directory, file, wildcard)
@@ -116,13 +119,19 @@ class FrameMain(wx.Frame):
 
         dialog.Destroy()
 
+        # Remember where we chose the last file to later resume there
+        CONFIG["import_dir"] = os.path.dirname(dialog.GetPath())
+
     def on_export_session_log(self, e):
         session = self.calculate_tab.session
         if session is None:
             raise NoSessionLog
 
+        if CONFIG["export_dir"] == "":
+            CONFIG["export_dir"] = os.path.join(os.getcwd(), "results")
+
         msg = "Save file as..."
-        directory = os.path.join(os.getcwd(), "results")
+        directory = CONFIG["export_dir"]
         file = "rva-" + self.calculate_tab.session_file_name
         style = wx.FD_SAVE
         wildcard = "Session Log (*.csv)|*.csv"
@@ -141,6 +150,9 @@ class FrameMain(wx.Frame):
                 csv_file.close()
 
         dialog.Destroy()
+
+        # Remember where we left to later resume there
+        CONFIG["export_dir"] = os.path.dirname(dialog.GetPath())
 
     def on_quit(self, e):
         self.Close()
