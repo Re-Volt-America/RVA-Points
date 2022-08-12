@@ -101,7 +101,6 @@ jobs:
          python -m pip install packaging
          python -m pip install appdirs
          python -m pip install wxPython
-         python -m pip install attrdict
       - name: Compile using pyinstaller
         run: |
          pyinstaller rva_points.py -w --onefile --windowed --workpath dist/macos/build --distpath ./dist/macos --icon icons/icon.ico
