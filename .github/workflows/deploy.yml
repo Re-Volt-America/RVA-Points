@@ -86,7 +86,7 @@ jobs:
           local-dir: "./dist/win64/"
           server-dir: "rva_points/win64/"
   version:
-    needs: [linux, win64, macos]
+    needs: [linux, win64]
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v3
