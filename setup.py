@@ -23,5 +23,5 @@ setuptools.setup(
         "Development Status :: alpha"
     ],
     python_requires='>=3.8',
-    install_requires=['wxPython', 'PyYAML', 'PyInstaller', 'requests', 'appdirs', 'packaging']
+    install_requires=['wxPython', 'PyYAML', 'PyInstaller', 'requests', 'appdirs', 'packaging', 'attrdict']
 )
