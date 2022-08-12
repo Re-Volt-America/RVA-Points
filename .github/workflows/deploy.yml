@@ -95,6 +95,7 @@ jobs:
       - name: Install dependencies
         run: |
          python -m pip install --upgrade pip setuptools wheel
+         python -m pip install attrdict
          python -m pip install PyInstaller
          python -m pip install PyYAML
          python -m pip install requests

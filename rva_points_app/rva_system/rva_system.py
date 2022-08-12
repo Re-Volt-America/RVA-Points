@@ -36,19 +36,7 @@ class RVASystem:
             1: "st",
             2: "nd",
             3: "rd",
-            4: "th",
-            5: "th",
-            6: "th",
-            7: "th",
-            8: "th",
-            9: "th",
-            10: "th",
-            11: "th",
-            12: "th",
-            13: "th",
-            14: "th",
-            15: "th",
-            16: "th"
+            **dict.fromkeys(list(range(4, 17)), "th")
         }
         self.NORMALIZER_CONSTANT = 0.1
         self.CARS_INFO = {}
