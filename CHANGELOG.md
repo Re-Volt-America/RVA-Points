@@ -1,3 +1,14 @@
+0.0.2.5.dev1
+===
+Changed:
+- Import and Export buttons will now remember the directory
+where they opened the last file and resume within it. The same behaviour now applies to Quick Access' Sessions
+and Results buttons.
+- Git links are no longer stored config.json.
+
+Fixed:
+- Fixed RVA-Data updates not displaying readable new versions.
+
 0.0.2.1.dev4
 ===
 Changed:
