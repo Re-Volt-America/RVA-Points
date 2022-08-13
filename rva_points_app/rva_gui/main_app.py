@@ -117,10 +117,10 @@ class FrameMain(wx.Frame):
             self.calculate_tab.allow_mystery_checkbox.Set3StateValue(wx.CHK_UNCHECKED)
             self.calculate_tab.allow_mystery_checkbox.Enable()
 
-        dialog.Destroy()
-
         # Remember where we chose the last file to later resume there
         CONFIG["import_dir"] = os.path.dirname(dialog.GetPath())
+
+        dialog.Destroy()
 
     def on_export_session_log(self, e):
         session = self.calculate_tab.session
@@ -149,10 +149,10 @@ class FrameMain(wx.Frame):
                     writer.writerows(self.calculate_tab.session.get_rva_singles_results_arr())
                 csv_file.close()
 
-        dialog.Destroy()
-
         # Remember where we left to later resume there
         CONFIG["export_dir"] = os.path.dirname(dialog.GetPath())
+
+        dialog.Destroy()
 
     def on_quit(self, e):
         self.Close()
