@@ -304,7 +304,7 @@ class Session:
 
     @staticmethod
     def __load_track_names():
-        with open(os.path.join(os.getcwd(), "data", "track_names.yaml")) as fh:
+        with open(os.path.join(os.getcwd(), "data", "track_names.yaml"), encoding="utf8") as fh:
             return yaml.load(fh, Loader=yaml.FullLoader)
 
 
@@ -323,7 +323,7 @@ class SessionLog:
         return self.__get_session()
 
     def __load(self):
-        with open(self.csv_path) as csv_file:
+        with open(self.csv_path, encoding="utf8") as csv_file:
             reader = csv.reader(csv_file, delimiter=',', quotechar='"')
 
             for row in reader:

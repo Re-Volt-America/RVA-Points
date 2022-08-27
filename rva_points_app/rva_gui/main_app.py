@@ -141,7 +141,8 @@ class FrameMain(wx.Frame):
         if response == wx.ID_OK:
             print_log(f"Exporting Session Log to '{dialog.GetPath()}'...")
 
-            with open(os.path.join(dialog.GetDirectory(), file), "w+", newline='') as csv_file:
+            with open(os.path.join(dialog.GetDirectory(), file), "w+", newline='', encoding="utf-8-sig") as csv_file:
+                print(self.calculate_tab.session.get_rva_singles_results_arr())
                 writer = csv.writer(csv_file, delimiter=",")
                 if self.calculate_tab.session.teams:
                     writer.writerows(self.calculate_tab.session.get_rva_teams_results_arr())
