@@ -401,7 +401,7 @@ class SessionLog:
     def __sanitize(log):
         i = len(log) - 1
         read_host = False
-        while i > 2:
+        while i > 1:
             if log[i][0] == "Session" and not read_host:
                 read_host = True
             elif log[i][0] == "Session":
