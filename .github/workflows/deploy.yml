@@ -81,7 +81,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
+          username: rva
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: "./dist/win64/"
           server-dir: "rva_points/win64/"
