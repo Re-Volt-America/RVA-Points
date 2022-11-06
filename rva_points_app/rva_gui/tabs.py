@@ -225,9 +225,6 @@ class CalculateTab(ScrolledTabPage):
                 subprocess.call(["open", dialog.GetPath()])
 
     def on_open_sessions_button_click(self, e):
-        if CONFIG["sessions_dir"] == "":
-            CONFIG["sessions_dir"] = os.path.join(os.getcwd(), "sessions")
-
         msg = ""
         directory = CONFIG["sessions_dir"]
         file = ""
@@ -248,14 +245,13 @@ class CalculateTab(ScrolledTabPage):
                               wx.OK | wx.ICON_INFORMATION)
 
         # Remember where we chose the last file to later resume there
-        CONFIG["sessions_dir"] = os.path.dirname(dialog.GetPath())
+        path = os.path.dirname(dialog.GetPath())
+        if path != "":
+            CONFIG["sessions_dir"] = path
 
         dialog.Destroy()
 
     def on_open_results_button_click(self, e):
-        if CONFIG["results_dir"] == "":
-            CONFIG["results_dir"] = os.path.join(os.getcwd(), "results")
-
         msg = ""
         directory = CONFIG["results_dir"]
         file = ""
@@ -263,19 +259,19 @@ class CalculateTab(ScrolledTabPage):
         dialog = wx.FileDialog(self, msg, directory, file, wildcard)
         response = dialog.ShowModal()
 
-        if response != wx.ID_OK:
-            return
-
-        if sys.platform == "win32":
-            os.startfile(dialog.GetPath())
-        elif sys.platform in ["linux", "darwin"]:
-            error = subprocess.call(["open", dialog.GetPath()])
-            if error:
-                wx.MessageBox(f"No application associated to {dialog.Filename}'s file type", "Info",
-                              wx.OK | wx.ICON_INFORMATION)
+        if response == wx.ID_OK:
+            if sys.platform == "win32":
+                os.startfile(dialog.GetPath())
+            elif sys.platform in ["linux", "darwin"]:
+                error = subprocess.call(["open", dialog.GetPath()])
+                if error:
+                    wx.MessageBox(f"No application associated to {dialog.Filename}'s file type", "Info",
+                                  wx.OK | wx.ICON_INFORMATION)
 
         # Remember where we chose the last file to later resume there
-        CONFIG["results_dir"] = os.path.dirname(dialog.GetPath())
+        path = os.path.dirname(dialog.GetPath())
+        if path != "":
+            CONFIG["results_dir"] = path
 
         dialog.Destroy()
 

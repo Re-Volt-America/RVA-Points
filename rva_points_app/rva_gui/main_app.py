@@ -95,9 +95,6 @@ class FrameMain(wx.Frame):
         self.SetMenuBar(self.menu_bar)
 
     def on_import_session_log(self, e):
-        if CONFIG["import_dir"] == "":
-            CONFIG["import_dir"] = os.path.join(os.getcwd(), "sessions")
-
         msg = "Select Session Log"
         directory = CONFIG["import_dir"]
         file = ""
@@ -118,7 +115,9 @@ class FrameMain(wx.Frame):
             self.calculate_tab.allow_mystery_checkbox.Enable()
 
         # Remember where we chose the last file to later resume there
-        CONFIG["import_dir"] = os.path.dirname(dialog.GetPath())
+        path = os.path.dirname(dialog.GetPath())
+        if path != "":
+            CONFIG["import_dir"] = path
 
         dialog.Destroy()
 
@@ -126,9 +125,6 @@ class FrameMain(wx.Frame):
         session = self.calculate_tab.session
         if session is None:
             raise NoSessionLog
-
-        if CONFIG["export_dir"] == "":
-            CONFIG["export_dir"] = os.path.join(os.getcwd(), "results")
 
         msg = "Save file as..."
         directory = CONFIG["export_dir"]
@@ -149,8 +145,10 @@ class FrameMain(wx.Frame):
                     writer.writerows(self.calculate_tab.session.get_rva_singles_results_arr())
                 csv_file.close()
 
-        # Remember where we left to later resume there
-        CONFIG["export_dir"] = os.path.dirname(dialog.GetPath())
+        # Remember where we chose the last file to later resume there
+        path = os.path.dirname(dialog.GetPath())
+        if path != "":
+            CONFIG["export_dir"] = path
 
         dialog.Destroy()
 
