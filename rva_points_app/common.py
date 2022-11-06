@@ -8,8 +8,8 @@ from rva_points_app.version import __version__
 APP_NAME = "rvapp"
 APP_TITLE = "RVA Points"
 APP_TITLE_WITH_VER = "RVA Points %s" % __version__
-RVA_POINTS_URL = "https://distribute.revolt-america.com/rva_points"
-RVA_DATA_URL = "https://distribute.revolt-america.com/rva_data"
+RVA_POINTS_URL = "https://distribute.rva.lat/rva_points"
+RVA_DATA_URL = "https://distribute.rva.lat/rva_data"
 
 RVA_CLASSES = ["rookie", "amateur", "advanced", "semi-pro", "pro", "super-pro", "random", "clockwork"]
 CAR_CLASSES = ["rookie", "amateur", "advanced", "semi-pro", "pro", "super-pro", "clockwork"]

@@ -11,7 +11,7 @@
 </p>
 
 ## Installation
-  1. Download the latest release for your platform available [here](https://distribute.revolt-america.com/rva_points/).
+  1. Download the latest release for your platform available [here](https://distribute.rva.lat/rva_points/).
   2. Depending on your platform:
      * Windows: Execute `rva_points.exe`.
      * Linux: Run `rva_points` from commandline (you may need to grant permissions).

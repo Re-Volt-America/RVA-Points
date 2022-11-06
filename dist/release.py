@@ -7,7 +7,7 @@ import json
 import hashlib
 import requests
 
-RVGL_URL = "https://distribute.revolt-america.com/rva_points/"
+RVA_POINTS_URL = "https://distribute.rva.lat/rva_points/"
 
 def get_checksum(filename):
     try:
@@ -30,7 +30,7 @@ appinfo["version"] = version
 
 for platform in ["win64", "linux", "macos"]:
     fname = f"rva_points_{platform}.zip"
-    url = f"{RVGL_URL}{platform}/{fname}"
+    url = f"{RVA_POINTS_URL}{platform}/{fname}"
 
     response = requests.get(url, stream=True)
     with open(fname, "wb") as f:
