@@ -1,9 +1,6 @@
 import yaml
-import os
-import wx
 
 from rva_points_app.common import *
-from rva_points_app.logging import print_log
 from rva_points_app.exception import *
 
 

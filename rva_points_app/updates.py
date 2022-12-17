@@ -1,4 +1,3 @@
-import requests
 import wx
 
 from packaging import version
