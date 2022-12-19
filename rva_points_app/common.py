@@ -11,8 +11,19 @@ APP_TITLE_WITH_VER = "RVA Points %s" % __version__
 RVA_POINTS_URL = "https://distribute.rva.lat/rva_points"
 RVA_DATA_URL = "https://distribute.rva.lat/rva_data"
 
+# Car classes (rva-specific & rv)
 RVA_CLASSES = ["rookie", "amateur", "advanced", "semi-pro", "pro", "super-pro", "random", "clockwork"]
 CAR_CLASSES = ["rookie", "amateur", "advanced", "semi-pro", "pro", "super-pro", "clockwork"]
+
+# Internal car class values
+CLOCKWORK = -1
+ROOKIE = 1
+AMATEUR = 2
+ADVANCED = 3
+SEMI_PRO = 4
+PRO = 5
+SUPER_PRO = 6
+RANDOM = None
 
 CONFIG_DIR = os.curdir
 
@@ -42,5 +53,7 @@ CONFIG = {
 }
 
 """ Returns the application base folder """
+
+
 def get_app_path():
     return sys.path[0]

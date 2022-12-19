@@ -20,14 +20,14 @@ class RVASystem:
             5: 2.25
         }
         self.CLASS_NUMBERS_MAP = {
-            "clockwork": -1,
-            "rookie": 0,
-            "amateur": 1,
-            "advanced": 2,
-            "semi-pro": 3,
-            "pro": 4,
-            "super-pro": 5,
-            "random": None
+            "clockwork": CLOCKWORK,
+            "rookie": ROOKIE,
+            "amateur": AMATEUR,
+            "advanced": ADVANCED,
+            "semi-pro": SEMI_PRO,
+            "pro": PRO,
+            "super-pro": SUPER_PRO,
+            "random": RANDOM
         }
         self.POSITION_SUFFIXES = {
             1: "st",
@@ -131,11 +131,11 @@ class RVASystem:
 
         car_class_number = self.CLASS_NUMBERS_MAP[car_class]
 
-        if self.category_class_number == 7 and car_class_number == -1:
+        if self.category_class_number == CLOCKWORK and car_class_number == RANDOM:
             return 1.0  # The current category is Clockwork, and player is using a Clockwork, therefore valid and 1.0
-        elif self.category_class_number == 7 and car_class_number != -1:
+        elif self.category_class_number == CLOCKWORK and car_class_number != CLOCKWORK:
             return None  # The current category is Clockwork, but the player is not using a Clockwork, therefore invalid
-        elif self.category_class_number != 7 and car_class_number == -1:
+        elif self.category_class_number != CLOCKWORK and car_class_number == CLOCKWORK:
             return None  # The current category is not Clockwork, but player is using a Clockwork, therefore invalid
 
         car_class_delta = self.category_class_number - car_class_number
