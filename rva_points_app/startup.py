@@ -1,8 +1,7 @@
 import json
+import requests
 
 from rva_points_app.logging import *
-
-import requests
 
 """ Makes sure all folders exist """
 def prepare_folders():
