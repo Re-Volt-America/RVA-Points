@@ -24,7 +24,7 @@ def fetch_data():
         create_file(tracks_file, r.text)
 
     data_version_file = "data/version/rva_data.json"
-    if not os.path.isfile(tracks_file):
+    if not os.path.isfile(data_version_file):
         r = requests.get(f"{RVA_DATA_URL}/rva_data.json")
         create_file(data_version_file, r.text)
 
