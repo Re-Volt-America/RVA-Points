@@ -25,7 +25,7 @@
   <h3>Preview Tab</h3>
   <img src="https://user-images.githubusercontent.com/26081543/174425594-dfc53e6a-6fe3-44d6-9b83-c0f0211866ec.PNG" alt=""/>
   <h3>Console Tab</h3>
-  <img src="https://user-images.githubusercontent.com/26081543/174425595-e8c852e6-b0e9-4141-8e51-52a79c52881c.PNG" alt=""/>
+  <img src="https://user-images.githubusercontent.com/26081543/212691047-e11836d3-51c6-4dd6-b934-d7565ed14c88.PNG" alt=""/>
 </div>
 
 ### Running
