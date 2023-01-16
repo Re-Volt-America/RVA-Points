@@ -285,9 +285,10 @@ class Session:
         official_score = round(official_score, 2)
 
         print_log(f"[PP] Average Position: {avg_pos}")
-        print_log(f"[MP] Participation Mult.: {participation_mult}")
+        print_log(f"[MP] Participation Multiplier: {participation_mult}")
         print_log(f"[PA] Obtained Points: {obtained_points}")
         print_log(f"[PO] Official Score: {official_score}")
+
         return official_score
 
     def get_race_count_of(self, racer_name):
