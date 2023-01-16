@@ -96,7 +96,7 @@ def update_data(button, text):
     wx.CallAfter(button.Disable)
     wx.CallAfter(text.SetLabelText, "Updating...")
 
-    for car_class in CAR_CLASSES:
+    for car_class in RVGL_CAR_CLASSES_NAMES:
         r = requests.get(f"{RVA_DATA_URL}/yaml/{car_class}.yaml")
         create_file(f"data/{car_class}.yaml", r.text)
 

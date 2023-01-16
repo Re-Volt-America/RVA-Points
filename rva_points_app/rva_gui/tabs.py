@@ -37,7 +37,7 @@ class CalculateTab(ScrolledTabPage):
         text = wx.StaticText(self, -1, "Select Category:")
         self.box_class_selector.Add(text, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
 
-        self.class_options = [clazz.capitalize() for clazz in RVA_CLASSES]
+        self.class_options = [clazz.capitalize() for clazz in RVA_CLASSES_NAMES]
         self.class_selector = wx.Choice(self, -1, choices=self.class_options)
         self.class_selector.Bind(wx.EVT_CHOICE, self.on_class_selection)
         self.box_class_selector.Add(self.class_selector, 1, wx.EXPAND | wx.ALL, 5)
@@ -161,12 +161,12 @@ class CalculateTab(ScrolledTabPage):
         self.box_actions_header.Add(self.box_update, 2, wx.ALIGN_LEFT | wx.ALL, 2)
         self.box_calculate.Add(self.box_actions_header, 0, wx.EXPAND | wx.ALL, 5)
 
-        self.set_class(RVA_CLASSES[CONFIG["default_category"]])
+        self.set_class(RVA_CLASSES_NAMES[CONFIG["default_category"]])
         self.check_for_updates()
 
     def on_class_selection(self, e):
         if e is None:
-            print_log(f"Selected Class: '{RVA_CLASSES[CONFIG['default_category']].capitalize()}'")
+            print_log(f"Selected Class: '{RVA_CLASSES_NAMES[CONFIG['default_category']].capitalize()}'")
         else:
             print_log(f"Selected Class: '{e.GetString()}'")
 
@@ -279,7 +279,7 @@ class CalculateTab(ScrolledTabPage):
         if car_class is not None:
             car_class.capitalize()
 
-        car_class = (RVA_CLASSES[CONFIG["default_category"]].capitalize(), car_class)[car_class in self.class_options]
+        car_class = (RVA_CLASSES_NAMES[CONFIG["default_category"]].capitalize(), car_class)[car_class in self.class_options]
         if car_class in self.class_options:
             self.class_selector.SetSelection(self.class_options.index(car_class))
             self.on_class_selection(None)

@@ -6,10 +6,13 @@ from rva_points_app.exception import *
 
 class RVASystem:
     def __init__(self):
+        self.category_class_number = None
+        self.allow_mystery = False
+
         """
         Maps the difference of car classes between session and racer to the correspondent bonus multiplier.  When a
         session category class is higher than the class of the car a racer used, a racer's score gets multiplied
-        by this bonus
+        by this bonus (ref: https://rva.lat/points)
         """
         self.BONUSES_PER_CLASS_DIFF = {
             0: 1.0,
@@ -20,14 +23,14 @@ class RVASystem:
             5: 2.25
         }
         self.CLASS_NUMBERS_MAP = {
-            "clockwork": CLOCKWORK,
             "rookie": ROOKIE,
             "amateur": AMATEUR,
             "advanced": ADVANCED,
             "semi-pro": SEMI_PRO,
             "pro": PRO,
             "super-pro": SUPER_PRO,
-            "random": RANDOM
+            "random": RANDOM,
+            "clockwork": CLOCKWORK
         }
         self.POSITION_SUFFIXES = {
             1: "st",
@@ -35,12 +38,6 @@ class RVASystem:
             3: "rd",
             **dict.fromkeys(list(range(4, 17)), "th")
         }
-        self.NORMALIZER_CONSTANT = 0.1
-        self.CARS_INFO = {}
-
-        self.category_class_number = None
-        self.allows_mystery = False
-
         self.SCORING = {
             1: 15,
             2: 12,
@@ -63,44 +60,29 @@ class RVASystem:
             9: 2, 10: 2,
             11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1
         }
+        self.NORMALIZER_CONSTANT = 0.1
+        self.CARS_INFO = {}
 
         self.__load_cars()
-
-    def __load_cars(self):
-        for car_class in CAR_CLASSES:
-            with open(os.path.join(os.getcwd(), "data", "%s.yaml" % car_class), encoding="utf8") as fh:
-                read_data = yaml.load(fh, Loader=yaml.FullLoader)
-                self.CARS_INFO = dict(self.CARS_INFO, **read_data)
-
-    def __get_car(self, car_name):
-        car = None
-        for car_class in CAR_CLASSES:
-            try:
-                car = self.CARS_INFO[car_class][self.__get_car_slug(car_name)]
-            except KeyError:
-                pass
-            if car is not None:
-                break
-        return car
 
     def set_category_class_number(self, category_class_number):
         self.category_class_number = category_class_number
 
     def set_allows_mystery(self, allows_mystery):
-        self.allows_mystery = allows_mystery
+        self.allow_mystery = allows_mystery
 
     def get_car_multiplier(self, car_name):
         car = self.__get_car(car_name)
 
-        if car is None:
-            return 0.0
-        else:
+        if car is not None:
             return car["multiplier"]
+
+        return 0.0
 
     def get_car_class(self, car_name):
         car = None
         clazz = None
-        for car_class in CAR_CLASSES:
+        for car_class in RVGL_CAR_CLASSES_NAMES:
             try:
                 car = self.CARS_INFO[car_class][self.__get_car_slug(car_name)]
             except KeyError:
@@ -118,11 +100,10 @@ class RVASystem:
             return self.SCORING[position]
 
     def get_car_bonus(self, car_name):
-        if car_name == "Mystery":
-            if not self.allows_mystery:
-                return None  # Car is mystery & the allow mystery box is unchecked, therefore invalid
+        if car_name == MYSTERY_NAME and not self.allow_mystery:
+            return None  # Car is mystery & the allow mystery box is unchecked, therefore invalid
 
-        if self.category_class_number == 6:
+        if self.category_class_number == RANDOM:
             return 1.0  # The current category is Random, therefore all cars are valid & bonus is always 1.0
 
         car_class = self.get_car_class(car_name)
@@ -138,6 +119,7 @@ class RVASystem:
         elif self.category_class_number != CLOCKWORK and car_class_number == CLOCKWORK:
             return None  # The current category is not Clockwork, but player is using a Clockwork, therefore invalid
 
+        # RANDOM and CLOCKWORK never make it here, so no side effects!
         car_class_delta = self.category_class_number - car_class_number
         if car_class_delta < 0:
             return None  # Car is above the current category, therefore points are invalid
@@ -147,13 +129,7 @@ class RVASystem:
     def get_racer_score(self, racer_entry, race):
         car_bonus = self.get_car_bonus(racer_entry.car)
 
-        if car_bonus is None:
-            print_log(f"[{race.track}] {racer_entry.position}{self.POSITION_SUFFIXES[racer_entry.position]}, "
-                      f"{racer_entry.car}, "
-                      f"Multiplier: Invalid, "
-                      f"Score: {0.0}")
-            return 0.0  # Car is above the current category's class, therefore points are invalidated
-        else:
+        if car_bonus is not None:
             final_mult = round(self.get_car_multiplier(racer_entry.car) * car_bonus, 3)
             if final_mult > 4.0:
                 final_mult = 4.0
@@ -166,6 +142,29 @@ class RVASystem:
                       f"Score: {racer_score}")
 
             return racer_score
+
+        print_log(f"[{race.track}] {racer_entry.position}{self.POSITION_SUFFIXES[racer_entry.position]}, "
+                  f"{racer_entry.car}, "
+                  f"Multiplier: Invalid, "
+                  f"Score: {0.0}")
+        return 0.0  # Car is above the current category's class, therefore points are invalidated
+
+    def __load_cars(self):
+        for car_class in RVGL_CAR_CLASSES_NAMES:
+            with open(os.path.join(os.getcwd(), "data", "%s.yaml" % car_class), encoding="utf8") as fh:
+                read_data = yaml.load(fh, Loader=yaml.FullLoader)
+                self.CARS_INFO = dict(self.CARS_INFO, **read_data)
+
+    def __get_car(self, car_name):
+        car = None
+        for car_class in RVGL_CAR_CLASSES_NAMES:
+            try:
+                car = self.CARS_INFO[car_class][self.__get_car_slug(car_name)]
+            except KeyError:
+                pass
+            if car is not None:
+                break
+        return car
 
     @staticmethod
     def __get_car_slug(car):

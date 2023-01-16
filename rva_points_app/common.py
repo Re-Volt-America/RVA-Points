@@ -11,19 +11,23 @@ APP_TITLE_WITH_VER = "RVA Points %s" % __version__
 RVA_POINTS_URL = "https://distribute.rva.lat/rva_points"
 RVA_DATA_URL = "https://distribute.rva.lat/rva_data"
 
-# Car classes (rva-specific & rv)
-RVA_CLASSES = ["rookie", "amateur", "advanced", "semi-pro", "pro", "super-pro", "random", "clockwork"]
-CAR_CLASSES = ["rookie", "amateur", "advanced", "semi-pro", "pro", "super-pro", "clockwork"]
+# Car classes (rva-specific & rvgl)
+RVA_CLASSES_NAMES = ["rookie", "amateur", "advanced", "semi-pro", "pro", "super-pro", "random", "clockwork"]
+RVGL_CAR_CLASSES_NAMES = ["rookie", "amateur", "advanced", "semi-pro", "pro", "super-pro", "clockwork"]
 
 # Internal car class values
-CLOCKWORK = -1
-ROOKIE = 1
-AMATEUR = 2
-ADVANCED = 3
-SEMI_PRO = 4
-PRO = 5
-SUPER_PRO = 6
-RANDOM = None
+ROOKIE = 0
+AMATEUR = 1
+ADVANCED = 2
+SEMI_PRO = 3
+PRO = 4
+SUPER_PRO = 5
+RANDOM = 6
+CLOCKWORK = 7
+
+# Special car names
+MYSTERY_NAME = "Mystery"
+CLOCKWORK_NAME = "Clockwork"
 
 CONFIG_DIR = os.curdir
 

@@ -12,7 +12,7 @@ def prepare_folders():
 
 """ Retrieves all the RVA Data files and creates them if they don't exist """
 def fetch_data():
-    for car_class in CAR_CLASSES:
+    for car_class in RVGL_CAR_CLASSES_NAMES:
         file = f"data/{car_class}.yaml"
         if not os.path.isfile(file):
             r = requests.get(f"{RVA_DATA_URL}/yaml/{car_class}.yaml")
