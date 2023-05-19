@@ -38,4 +38,4 @@ Software you will need in order to run the program in development mode.
   - requests
   - packaging
   - PyInstaller (we use it for dist)
-- We suggest the usage of venv & pip for development & dependency management. (In case of Apple Silicon use conda)
+- We suggest using venv & pip for development & dependency management. (In case of Apple Silicon use conda)
