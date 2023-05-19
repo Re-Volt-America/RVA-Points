@@ -8,6 +8,7 @@ for i in "$@"; do
     --win64) win32=win64;;
     --build) build=true;;
     --package) package=true;;
+    --release) release=true;;
     --clean) clean=true;;
   esac
 done
@@ -62,5 +63,24 @@ if [ "$package" = true ]; then
   if [ "$win32" ]; then
     rm -f rva_points_${win32}.zip
     (cd .. && dist/${win32}/7z.exe a dist/rva_points_${win32}.zip -r ${files} -x\!"*__pycache__*")
+  fi
+fi
+
+# Run after having used --build!
+#
+if [ "$release" = true ]; then
+  if [ "$linux" ]; then
+    rm -f rva_points_${linux}_release.zip
+    (cd .. && dist/${linux}/7zz a dist/rva_points_${linux}_release.zip icons ./dist/${linux}/rva_points  -x\!"*__pycache__*")
+  fi
+
+  if [ "$macos" ]; then
+    rm -f rva_points_${macos}_release.zip
+    (cd .. && dist/${macos}/7zz a dist/rva_points_${macos}_release.zip ./dist/${macos}/RVA\ Points.app -x\!"*__pycache__*")
+  fi
+
+  if [ "$win32" ]; then
+    rm -f rva_points_${win32}_release.zip
+    (cd .. && dist/${win32}/7z.exe a dist/rva_points_${win32}_release.zip icons ./dist/${win32}/rva_points.exe -x\!"*__pycache__*")
   fi
 fi
