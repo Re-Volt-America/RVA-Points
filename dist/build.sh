@@ -7,6 +7,7 @@ for i in "$@"; do
     --win32) win32=win32;;
     --win64) win32=win64;;
     --build) build=true;;
+    --package) package=true;;
     --clean) clean=true;;
   esac
 done
@@ -42,5 +43,24 @@ if [ "$build" = true ]; then
 
   if [ "$win32" ]; then
     "${python}.exe" -m PyInstaller rva_points_${win32}.spec --workpath ${win32}/build --distpath ${win32}
+  fi
+fi
+
+if [ "$package" = true ]; then
+  files="icons rva_points_app rva_points.py"
+
+  if [ "$linux" ]; then
+    rm -f rva_points_${linux}.zip
+    (cd .. && dist/${linux}/7zz a dist/rva_points_${linux}.zip -r ${files} -x\!"*__pycache__*")
+  fi
+
+  if [ "$macos" ]; then
+    rm -f rva_points_${macos}.zip
+    (cd .. && dist/${macos}/7zz a dist/rva_points_${macos}.zip -r ${files} -x\!"*__pycache__*")
+  fi
+
+  if [ "$win32" ]; then
+    rm -f rva_points_${win32}.zip
+    (cd .. && dist/${win32}/7z.exe a dist/rva_points_${win32}.zip -r ${files} -x\!"*__pycache__*")
   fi
 fi
