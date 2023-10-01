@@ -25,7 +25,7 @@ jobs:
          python -m pip install "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl"
       - name: Compile using pyinstaller
         run: |
-         pyinstaller rva_points.py -w --onefile --workpath dist/linux/build --distpath ./dist/linux
+         pyinstaller ./dist/rva_points_linux.spec -w --onefile --workpath dist/linux/build --distpath ./dist/linux
          mv ./dist/linux/rva_points .
       - name: Prepare release
         uses: papeloto/action-zip@v1
@@ -64,7 +64,7 @@ jobs:
          python -m pip install wxPython
       - name: Compile using pyinstaller
         run: |
-         pyinstaller ./dist/rva_points.spec -w --onefile --workpath dist/win64/build --distpath ./dist/win64
+         pyinstaller ./dist/rva_points_win64.spec -w --onefile --workpath dist/win64/build --distpath ./dist/win64
          mv ./dist/win64/rva_points.exe .
       - name: Prepare release
         uses: papeloto/action-zip@v1
