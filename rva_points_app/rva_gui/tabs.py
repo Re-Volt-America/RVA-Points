@@ -384,7 +384,8 @@ class PreviewTab(ScrolledTabPage):
                         self.session_grid.SetColLabelValue(head_col, str(item))
                     else:
                         self.session_grid.SetColLabelValue(head_col, str(item))
-                    if str(item) in ["PP", "PA", "CC", "MP", "PO"]:
+                    if str(item) in ["'PP", "'PA", "'CC", "'MP", "'PO"]:
+                        self.session_grid.SetColLabelValue(head_col, str(item[1:]))
                         self.session_grid.SetColSize(head_col, 80)
                     if str(item) == "Team":
                         self.session_grid.SetColSize(head_col, 40)

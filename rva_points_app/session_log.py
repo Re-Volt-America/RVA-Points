@@ -155,7 +155,7 @@ class Session:
         return cars
 
     def get_rva_singles_results_arr(self):
-        rva_results = [["Pos", "Racer"] + self.get_track_short_names_arr() + ["PP", "PA", "CC", "MP", "PO"]]
+        rva_results = [["Pos", "Racer"] + self.get_track_short_names_arr() + ["'PP", "'PA", "'CC", "'MP", "'PO"]]
 
         pos = 1
         racer_result_entries = self.get_racer_result_entries()
@@ -180,7 +180,7 @@ class Session:
         return rva_results
 
     def get_rva_teams_results_arr(self):
-        rva_results = [["Pos", "Racer", "Team"] + self.get_track_short_names_arr() + ["CC", "PA"]]
+        rva_results = [["Pos", "Racer", "Team"] + self.get_track_short_names_arr() + ["'CC", "'PA"]]
 
         pos = 1
         for result_entry in self.get_racer_result_entries():
