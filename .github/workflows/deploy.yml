@@ -7,7 +7,7 @@ on:
 
 jobs:
   linux:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
@@ -17,12 +17,12 @@ jobs:
         run: |
          sudo apt-get install libsdl2-2.0-0
          python -m pip install --upgrade pip setuptools wheel
-         python -m pip install PyInstaller
+         python -m pip install PyInstaller==4.4
          python -m pip install PyYAML
          python -m pip install requests
          python -m pip install packaging
          python -m pip install appdirs
-         python -m pip install "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl"
+         python -m pip install "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl"
       - name: Compile using pyinstaller
         run: |
          pyinstaller ./dist/rva_points_linux.spec -w --onefile --workpath dist/linux/build --distpath ./dist/linux
@@ -87,7 +87,7 @@ jobs:
           server-dir: "rva_points/win64/"
   version:
     needs: [linux, win64]
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
