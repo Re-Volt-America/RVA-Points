@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['..\\rva_points.py'],
+a = Analysis(['../rva_points.py'],
              pathex=[],
              binaries=[],
              datas=[],
@@ -23,12 +23,12 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='RVA Points',
+          name='rva_points',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False, icon='..\\icons\\icon.ico',
+          console=False, icon='../icons/icon.ico',
           version='version.txt')
