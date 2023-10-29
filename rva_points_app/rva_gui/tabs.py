@@ -431,10 +431,6 @@ class PreviewTab(ScrolledTabPage):
                         if self.session_grid.GetCellValue(row, col).startswith("'"):
                             self.session_grid.SetCellTextColour(row, col, self.GRID_INVALID_PLACE_RGB)
                             continue
-
-                        if self.session_grid.GetColLabelValue(col) in ["PP", "PA", "CC", "MP", "PO"]:
-                            continue
-
                         try:
                             place = int(self.session_grid.GetCellValue(row, col))
                             if place == 1:
