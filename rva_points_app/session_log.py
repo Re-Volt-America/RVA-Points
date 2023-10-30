@@ -73,7 +73,7 @@ class Session:
         self.rva_system = rva_system
         self.teams = teams
 
-        self.TRACK_NAMES = self.__load_track_names()
+        self.TRACK_DATA = self.__load_track_data()
 
     def get_racer_result_entries(self):
         racer_result_entries = []
@@ -295,17 +295,18 @@ class Session:
         races_played = self.get_tracks_played_by(racer_name)
         return len(races_played)
 
-    def __get_track_short_name(self, track_name):
-        actual_name = track_name.encode('cp1252').decode('utf8')  # Blame the '•' in Museum 3
-        for track_key in self.TRACK_NAMES:
-            if actual_name in [track_key, f"{track_key} R", f"{track_key} M", f"{track_key} RM"]:
-                return self.TRACK_NAMES[track_key]
+    def __get_track_short_name(self, track):
+        actual_name = track.encode('cp1252').decode('utf8')  # Blame the '•' in Museum 3
+        for track_key in self.TRACK_DATA:
+            track_name = self.TRACK_DATA[track_key]['name']
+            if actual_name in [track_name, f"{track_name} R", f"{track_name} M", f"{track_name} RM"]:
+                return self.TRACK_DATA[track_key]['short_name']
 
         raise TrackShortNameNotFound(actual_name)
 
     @staticmethod
-    def __load_track_names():
-        with open(os.path.join(os.getcwd(), "data", "track_names.yaml"), encoding="utf8") as fh:
+    def __load_track_data():
+        with open(os.path.join(os.getcwd(), "data", RVA_TRACKS_FILE), encoding="utf8") as fh:
             return yaml.load(fh, Loader=yaml.FullLoader)
 
 

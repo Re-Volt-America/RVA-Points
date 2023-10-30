@@ -10,6 +10,7 @@ APP_TITLE = "RVA Points"
 APP_TITLE_WITH_VER = "RVA Points %s" % __version__
 RVA_POINTS_URL = "https://distribute.rva.lat/rva_points"
 RVA_DATA_URL = "https://distribute.rva.lat/rva_data"
+RVA_TRACKS_FILE = "tracks.yml"
 
 # Car classes (rva-specific & rvgl)
 RVA_CLASSES_NAMES = ["rookie", "amateur", "advanced", "semi-pro", "pro", "super-pro", "random", "clockwork"]

@@ -151,7 +151,7 @@ class RVASystem:
 
     def __load_cars(self):
         for car_class in RVGL_CAR_CLASSES_NAMES:
-            with open(os.path.join(os.getcwd(), "data", "%s.yaml" % car_class), encoding="utf8") as fh:
+            with open(os.path.join(os.getcwd(), "data", "%s.yml" % car_class), encoding="utf8") as fh:
                 read_data = yaml.load(fh, Loader=yaml.FullLoader)
                 self.CARS_INFO = dict(self.CARS_INFO, **read_data)
 

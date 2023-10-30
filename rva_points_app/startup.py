@@ -13,14 +13,14 @@ def prepare_folders():
 """ Retrieves all the RVA Data files and creates them if they don't exist """
 def fetch_data():
     for car_class in RVGL_CAR_CLASSES_NAMES:
-        file = f"data/{car_class}.yaml"
+        file = f"data/{car_class}.yml"
         if not os.path.isfile(file):
-            r = requests.get(f"{RVA_DATA_URL}/yaml/{car_class}.yaml")
-            create_file(f"data/{car_class}.yaml", r.text)
+            r = requests.get(f"{RVA_DATA_URL}/yml/{car_class}.yml")
+            create_file(f"data/{car_class}.yml", r.text)
 
-    tracks_file = "data/track_names.yaml"
+    tracks_file = f"data/{RVA_TRACKS_FILE}"
     if not os.path.isfile(tracks_file):
-        r = requests.get(f"{RVA_DATA_URL}/yaml/track_names.yaml")
+        r = requests.get(f"{RVA_DATA_URL}/yml/{RVA_TRACKS_FILE}")
         create_file(tracks_file, r.text)
 
     data_version_file = "data/version/rva_data.json"
