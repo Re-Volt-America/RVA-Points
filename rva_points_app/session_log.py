@@ -163,11 +163,11 @@ class Session:
             racer_name = result_entry.name
             racer_positions_line = [str(pos), racer_name]
             racer_positions_line += self.resolve_racer_positions_line(racer_name)
-            racer_positions_line.append(str(result_entry.average_position).replace(".", CONFIG["decimal_number_separator"]))
-            racer_positions_line.append(str(result_entry.obtained_points).replace(".", CONFIG["decimal_number_separator"]))
-            racer_positions_line.append(result_entry.race_count)
-            racer_positions_line.append(str(result_entry.participation_multiplier).replace(".", CONFIG["decimal_number_separator"]))
-            racer_positions_line.append(str(result_entry.official_score).replace(".", CONFIG["decimal_number_separator"]))
+            racer_positions_line.append(f"!{str(result_entry.average_position).replace('.', CONFIG['decimal_number_separator'])}")
+            racer_positions_line.append(f"!{str(result_entry.obtained_points).replace('.', CONFIG['decimal_number_separator'])}")
+            racer_positions_line.append(f"!{result_entry.race_count}")
+            racer_positions_line.append(f"!{str(result_entry.participation_multiplier).replace('.', CONFIG['decimal_number_separator'])}")
+            racer_positions_line.append(f"!{str(result_entry.official_score).replace('.', CONFIG['decimal_number_separator'])}")
 
             racer_cars_line = [str(), str()]
             racer_cars_line += self.resolve_racer_cars_line(racer_name)
@@ -192,8 +192,8 @@ class Session:
                 raise InvalidRacerTeam(racer_name)
 
             racer_positions_line += self.resolve_racer_positions_line(racer_name)
-            racer_positions_line.append(result_entry.race_count)
-            racer_positions_line.append(str(result_entry.obtained_points).replace(".", CONFIG["decimal_number_separator"]))
+            racer_positions_line.append(f"!{result_entry.race_count}")
+            racer_positions_line.append(f"!{str(result_entry.obtained_points).replace('.', CONFIG['decimal_number_separator'])}")
 
             racer_cars_line = [str(), str(), str()]
             racer_cars_line += self.resolve_racer_cars_line(racer_name)

@@ -428,8 +428,11 @@ class PreviewTab(ScrolledTabPage):
 
                     if row % 2 == 0:  # Even rows are used for places
                         self.session_grid.SetCellAlignment(row, col, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
-                        if self.session_grid.GetCellValue(row, col).startswith("'"):
+                        if self.session_grid.GetCellValue(row, col).startswith("'"):  # Invalid positions are red
                             self.session_grid.SetCellTextColour(row, col, self.GRID_INVALID_PLACE_RGB)
+                            continue
+                        if self.session_grid.GetCellValue(row, col).startswith("!"):  # Remove '!' marker from result columns
+                            self.session_grid.SetCellValue(row, col, self.session_grid.GetCellValue(row, col)[1:])
                             continue
                         try:
                             place = int(self.session_grid.GetCellValue(row, col))
