@@ -96,6 +96,8 @@ jobs:
           python-version: "3.8"
       - name: Install dependencies
         run: |
+         sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y
+         sudo apt-get install libsdl2-2.0-0
          python -m pip install --upgrade pip setuptools wheel
          python -m pip install requests
          python -m pip install packaging
