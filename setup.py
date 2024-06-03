@@ -9,7 +9,7 @@ setuptools.setup(
     name="rva-points",
     version=__version__,
     author="BGM",
-    author_email="jose@bgmp.cl",
+    author_email="jose@bgm.cl",
     description="Points calculator for Re-Volt America",
     long_description=long_description,
     long_description_content_type="text/markdown",
